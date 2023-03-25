@@ -1,3 +1,85 @@
-#+title: Tensorflow Project
+#+title: Untexify - a bad clone of [[https://detexify.kirelabs.org/classify.html][Detexify]]
+#+
 * What this is
 This is a placeholder repo for a future Tensorflow project I intend to complete by [2023-03-27 Mon].
+* Road-map
+- [X] Create the dataset
+  - [X] Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
+    I simply copied a table's symbols and formatted them into a file such that each piece of TeX was on its own line.
+  - [X] Convert them into .png files
+    I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reproduction, I placed the file of my equations called ~equations.txt~ the root of the git repository, then ran from the root:
+    #+begin_src bash
+    cd src/
+    . set.sh $absolute_path_to_equations_txt
+    cd ..
+    cd equations.txt_aux
+    python generate_latex.py
+    #+end_src
+    I numbered the resulting files using Dired.
+  - [X] Sort them into classes based on their latex code
+    I created my [[./images/][images/]] folder, and used this bit of bash magic to sort them into folders sharing their same names:
+    #+begin_src bash
+    for i in $(seq 0 $IMAGE_COUNT); do mkdir $i; mv $i.png $i/; done
+    #+end_src
+    Which resulted in:
+    #+begin_src bash :results
+    ls ./images
+    #+end_src
+
+    #+RESULTS:
+    |  0 |
+    |  1 |
+    | 10 |
+    | 11 |
+    | 12 |
+    | 13 |
+    | 14 |
+    | 15 |
+    | 16 |
+    | 17 |
+    | 18 |
+    | 19 |
+    |  2 |
+    | 20 |
+    | 21 |
+    | 22 |
+    | 23 |
+    | 24 |
+    | 25 |
+    | 26 |
+    | 27 |
+    | 28 |
+    | 29 |
+    |  3 |
+    | 30 |
+    | 31 |
+    | 32 |
+    | 33 |
+    | 34 |
+    | 35 |
+    | 36 |
+    | 37 |
+    | 38 |
+    | 39 |
+    |  4 |
+    | 40 |
+    | 41 |
+    | 42 |
+    | 43 |
+    | 44 |
+    | 45 |
+    | 46 |
+    | 47 |
+    | 48 |
+    | 49 |
+    |  5 |
+    | 50 |
+    | 51 |
+    | 52 |
+    |  6 |
+    |  7 |
+    |  8 |
+    |  9 |
+
+*** [ ] Simulate handwriting by programmatically distorting the .pngs
+** [ ] Train the model

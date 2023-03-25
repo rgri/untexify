@@ -6,11 +6,16 @@ import PIL.Image
 import tensorflow as tf
 import pathlib
 
+from tensorflow import keras
+from keras import layers
+from keras.models import Sequential
+
+
 # .Path()'s need an absolute path
 data_dir = pathlib.Path("/home/shortcut/envs/tf_wsl/tf_project/images/")
 image_count = len(list(data_dir.glob("*.png")))
 print(image_count)
-batch_size = 10
+batch_size = 2
 img_height = 72
 img_width = 72
 train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -30,8 +35,8 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
     image_size=(img_height, img_width),
     batch_size=batch_size,
 )
-class_names = train_ds.class_names
-
+classes = train_ds.class_names
+print(classes)
 # Display first nine images in the data_set.
 # plt.figure(figsize=(10, 10))
 # for images, labels in data_set.take(1):
@@ -58,11 +63,36 @@ model = tf.keras.Sequential(
     ]
 )
 
-model.compile(
-    optimizer="adam",
-    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-    metrics=["accuracy"],
-)
+# Compile and display the model. On my initial run, I got 0 validation
+# accuracy, I suspect because there was only one example per class.
+#
+# model.compile(
+#     optimizer="adam",
+#     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+#     metrics=["accuracy"],
+# )
 
-epochs = 10
-# history = model.fit(trains_ds)
+# epochs = 10
+# # history = model.fit(trains_ds)
+# history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
+# acc = history.history["accuracy"]
+# val_acc = history.history["val_accuracy"]
+
+# loss = history.history["loss"]
+# val_loss = history.history["val_loss"]
+
+# epochs_range = range(epochs)
+
+# plt.figure(figsize=(8, 8))
+# plt.subplot(1, 2, 1)
+# plt.plot(epochs_range, acc, label="Training Accuracy")
+# plt.plot(epochs_range, val_acc, label="Validation Accuracy")
+# plt.legend(loc="lower right")
+# plt.title("Training and Validation Accuracy")
+
+# plt.subplot(1, 2, 2)
+# plt.plot(epochs_range, loss, label="Training Loss")
+# plt.plot(epochs_range, val_loss, label="Validation Loss")
+# plt.legend(loc="upper right")
+# plt.title("Training and Validation Loss")
+# plt.show()

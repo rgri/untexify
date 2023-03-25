@@ -5,7 +5,7 @@ This is a placeholder repo for a future Tensorflow project I intend to complete 
 * Road-map
 - [X] Create the dataset
   - [X] Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
-    I simply copied a table's symbols and formatted them into a file such that each piece of TeX was on its own line.
+    I simply copied a table's symbols and formatted them into a file such that each piece of LaTeX was on its own line.
   - [X] Convert them into .png files
     I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reproduction, I placed the file of my equations called ~equations.txt~ the root of the git repository, then ran from the root:
     #+begin_src bash

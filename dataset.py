@@ -5,6 +5,8 @@ import PIL
 import PIL.Image
 import tensorflow as tf
 import pathlib
+import albumentations as A
+import cv2 as beebo
 
 from tensorflow import keras
 from keras import layers
@@ -12,7 +14,9 @@ from keras.models import Sequential
 
 
 # .Path()'s need an absolute path
-data_dir = pathlib.Path("/home/shortcut/envs/tf_wsl/tf_project/images/")
+data_dir = pathlib.Path("/home/shortcut/envs/tf_wsl/tf_project/images")
+
+("/home/shortcut/envs/tf_wsl/tf_project/images/")
 image_count = len(list(data_dir.glob("*.png")))
 print(image_count)
 batch_size = 2
@@ -35,8 +39,7 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
     image_size=(img_height, img_width),
     batch_size=batch_size,
 )
-classes = train_ds.class_names
-print(classes)
+class_names = range(0, 53)
 # Display first nine images in the data_set.
 # plt.figure(figsize=(10, 10))
 # for images, labels in data_set.take(1):

@@ -37,6 +37,7 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
     batch_size=batch_size,
 )
 class_names = range(0, 53)
+# TODO: Clean up these random comments.
 # Display first nine images in the data_set.
 # plt.figure(figsize=(10, 10))
 # for images, labels in data_set.take(1):
@@ -65,14 +66,16 @@ model = tf.keras.Sequential(
 
 # Compile and display the model. On my initial run, I got 0 validation
 # accuracy, I suspect because there was only one example per class.
-#
+# TODO: Comment cleanup.
 model.compile(
     optimizer="adam",
     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
     metrics=["accuracy"],
 )
 
-epochs = 10
+# This is a magic number.
+epochs = 30
+# TODO: Comment cleanup.
 # history = model.fit(trains_ds)
 history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
 acc = history.history["accuracy"]

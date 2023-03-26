@@ -19,12 +19,16 @@ image = cv2.imread("/Users/shortcut/git/untexify/images/0/0.png")
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 transform = A.Compose([A.ElasticTransform(alpha=2, sigma=.9, alpha_affine=10, p=1), ])
-for i in range(10):
-    # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
-    # transformed=A.elastic_transform(image, 3, 2, 13)
-    transformed = transform(image=image)["image"]
-    plt.imshow(transformed)
-    plt.show()
+for i in range(53):
+    imagePath = "/Users/shortcut/git/untexify/original_images/" + str(i) + ".png"
+    image = cv2.imread(imagePath)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    for j in range(200):
+        # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
+        transformed = transform(image=image)["image"]
+        transformed = np.array(transformed)
+        outName = "/Users/shortcut/git/untexify/images/" + str(i) + "/" + str(j) + ".png"
+        cv2.imwrite(outName, transformed)
 
 
 
@@ -32,7 +36,7 @@ for i in range(10):
 
 image_count = len(list(data_dir.glob("*.png")))
 print(image_count)
-batch_size = 2
+batch_size = 64
 img_height = 72
 img_width = 72
 train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -82,33 +86,33 @@ model = tf.keras.Sequential(
 # Compile and display the model. On my initial run, I got 0 validation
 # accuracy, I suspect because there was only one example per class.
 #
-# model.compile(
-#     optimizer="adam",
-#     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-#     metrics=["accuracy"],
-# )
+model.compile(
+    optimizer="adam",
+    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    metrics=["accuracy"],
+)
 
-# epochs = 10
-# # history = model.fit(trains_ds)
-# history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
-# acc = history.history["accuracy"]
-# val_acc = history.history["val_accuracy"]
+epochs = 10
+# history = model.fit(trains_ds)
+history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
+acc = history.history["accuracy"]
+val_acc = history.history["val_accuracy"]
 
-# loss = history.history["loss"]
-# val_loss = history.history["val_loss"]
+loss = history.history["loss"]
+val_loss = history.history["val_loss"]
 
-# epochs_range = range(epochs)
+epochs_range = range(epochs)
 
-# plt.figure(figsize=(8, 8))
-# plt.subplot(1, 2, 1)
-# plt.plot(epochs_range, acc, label="Training Accuracy")
-# plt.plot(epochs_range, val_acc, label="Validation Accuracy")
-# plt.legend(loc="lower right")
-# plt.title("Training and Validation Accuracy")
+plt.figure(figsize=(8, 8))
+plt.subplot(1, 2, 1)
+plt.plot(epochs_range, acc, label="Training Accuracy")
+plt.plot(epochs_range, val_acc, label="Validation Accuracy")
+plt.legend(loc="lower right")
+plt.title("Training and Validation Accuracy")
 
-# plt.subplot(1, 2, 2)
-# plt.plot(epochs_range, loss, label="Training Loss")
-# plt.plot(epochs_range, val_loss, label="Validation Loss")
-# plt.legend(loc="upper right")
-# plt.title("Training and Validation Loss")
-# plt.show()
+plt.subplot(1, 2, 2)
+plt.plot(epochs_range, loss, label="Training Loss")
+plt.plot(epochs_range, val_loss, label="Validation Loss")
+plt.legend(loc="upper right")
+plt.title("Training and Validation Loss")
+plt.show()

@@ -2,87 +2,95 @@
 * What this is
 This is a placeholder repo for a future Tensorflow project I intend to complete by [2023-03-27 Mon].
 * Road-map
-- [-] Create the dataset
-  - [X] Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
+** TODO Create the dataset
+*** DONE Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
 
-    I simply copied a table's symbols and formatted them into a file such that each piece of LaTeX was on its own line.
-  - [X] Convert them into .png files
+I simply copied a table's symbols and formatted them into a file such that each piece of LaTeX was on its own line.
+*** DONE Convert them into .png files
 
-    I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reproduction, I placed the file containing my equations called ~equations.txt~ the root of the git repository, then ran from the root:
-    #+begin_src bash
+I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reproduction, I placed the file containing my equations called ~equations.txt~ the root of the git repository, then ran from the root:
+#+begin_src bash
     cd src/
     . set.sh $absolute_path_to_equations_txt
     cd ..
     cd equations.txt_aux
     python generate_latex.py
-    #+end_src
-    I numbered the resulting files using Dired.
-  - [X] Sort them into classes based on their latex code
+#+end_src
+I numbered the resulting files using Dired.
+*** DONE Sort them into classes based on their latex code
 
-    I created my [[./images/][images/]] folder, and used this bit of bash magic to sort them into folders sharing their same names:
-    #+begin_src bash
+I created my [[file:./images/][images/]] folder, and used this bit of bash magic to sort them into folders sharing their same names:
+#+begin_src bash
     for i in $(seq 0 $IMAGE_COUNT); do mkdir $i; mv $i.png $i/; done
-    #+end_src
-    Which resulted in:
-    #+begin_src bash :results
+#+end_src
+Which resulted in:
+#+begin_src bash :results
     ls ./images
-    #+end_src
+#+end_src
 
-    #+RESULTS:
-    |  0 |
-    |  1 |
-    | 10 |
-    | 11 |
-    | 12 |
-    | 13 |
-    | 14 |
-    | 15 |
-    | 16 |
-    | 17 |
-    | 18 |
-    | 19 |
-    |  2 |
-    | 20 |
-    | 21 |
-    | 22 |
-    | 23 |
-    | 24 |
-    | 25 |
-    | 26 |
-    | 27 |
-    | 28 |
-    | 29 |
-    |  3 |
-    | 30 |
-    | 31 |
-    | 32 |
-    | 33 |
-    | 34 |
-    | 35 |
-    | 36 |
-    | 37 |
-    | 38 |
-    | 39 |
-    |  4 |
-    | 40 |
-    | 41 |
-    | 42 |
-    | 43 |
-    | 44 |
-    | 45 |
-    | 46 |
-    | 47 |
-    | 48 |
-    | 49 |
-    |  5 |
-    | 50 |
-    | 51 |
-    | 52 |
-    |  6 |
-    |  7 |
-    |  8 |
-    |  9 |
+#+results:
+|  0 |
+|  1 |
+| 10 |
+| 11 |
+| 12 |
+| 13 |
+| 14 |
+| 15 |
+| 16 |
+| 17 |
+| 18 |
+| 19 |
+|  2 |
+| 20 |
+| 21 |
+| 22 |
+| 23 |
+| 24 |
+| 25 |
+| 26 |
+| 27 |
+| 28 |
+| 29 |
+|  3 |
+| 30 |
+| 31 |
+| 32 |
+| 33 |
+| 34 |
+| 35 |
+| 36 |
+| 37 |
+| 38 |
+| 39 |
+|  4 |
+| 40 |
+| 41 |
+| 42 |
+| 43 |
+| 44 |
+| 45 |
+| 46 |
+| 47 |
+| 48 |
+| 49 |
+|  5 |
+| 50 |
+| 51 |
+| 52 |
+|  6 |
+|  7 |
+|  8 |
+|  9 |
+*** TODO Simulate handwriting by programmatically distorting the .pngs
 
-  - [ ] Simulate handwriting by programmatically distorting the .pngs
+To do this I need a series of "transforms" which will piecewise randomly affect an aspect of a given image. This prevents overfitting, and in the first phase makes the model functional at all. Here are the aspects of the image I chose to transform:
 
-- [ ] Train the model
+|----------------------------------+------------------------|
+| Writing aspect                   | Transform name         |
+|----------------------------------+------------------------|
+| "wiggliness" or poor handwriting | ~A.ElasticTransform()~ |
+| Orientation/rotation             |                        |
+| Crossing                         |                        |
+|----------------------------------+------------------------|
+** TODO Train the model

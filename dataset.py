@@ -14,105 +14,18 @@ from keras import layers
 from keras.models import Sequential
 
 # .Path()'s need an absolute path
-data_dir = pathlib.Path("/Users/shortcut/git/untexify/images")
-image = cv2.imread("/Users/shortcut/git/untexify/images/0/0.png")
+data_dir = pathlib.Path("/home/shortcut/git/untexify/images")
+image = cv2.imread("/home/shortcut/git/untexify/images/0/0.png")
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-transform = A.Compose([A.ElasticTransform(alpha=2, sigma=.9, alpha_affine=10, p=1), ])
+transform = A.Compose([A.ElasticTransform(alpha=2, sigma=0.9, alpha_affine=10, p=1)])
 for i in range(53):
-    imagePath = "/Users/shortcut/git/untexify/original_images/" + str(i) + ".png"
+    imagePath = "/home/shortcut/git/untexify/original_images/" + str(i) + ".png"
     image = cv2.imread(imagePath)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     for j in range(200):
         # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
         transformed = transform(image=image)["image"]
         transformed = np.array(transformed)
-        outName = "/Users/shortcut/git/untexify/images/" + str(i) + "/" + str(j) + ".png"
+        outName = "/home/shortcut/git/untexify/images/" + str(i) + "/" + str(j) + ".png"
         cv2.imwrite(outName, transformed)
-
-
-
-
-
-image_count = len(list(data_dir.glob("*.png")))
-print(image_count)
-batch_size = 64
-img_height = 72
-img_width = 72
-train_ds = tf.keras.utils.image_dataset_from_directory(
-    data_dir,
-    validation_split=0.2,
-    subset="training",
-    seed=123,
-    image_size=(img_height, img_width),
-    batch_size=batch_size,
-)
-
-val_ds = tf.keras.utils.image_dataset_from_directory(
-    data_dir,
-    validation_split=0.2,
-    subset="validation",
-    seed=123,
-    image_size=(img_height, img_width),
-    batch_size=batch_size,
-)
-class_names = range(0, 53)
-# Display first nine images in the data_set.
-# plt.figure(figsize=(10, 10))
-# for images, labels in data_set.take(1):
-#     for i in range(9):
-#         ax = plt.subplot(3, 3, i + 1)
-#         plt.imshow(images[i].numpy().astype("uint8"))
-#         plt.title(class_names[labels[i]])
-#         plt.axis("off")
-# plt.show()
-num_classes = len(class_names)
-
-model = tf.keras.Sequential(
-    [
-        tf.keras.layers.Rescaling(1.0 / 255, input_shape=(img_height, img_width, 3)),
-        tf.keras.layers.Conv2D(16, 3, padding="same", activation="relu"),
-        tf.keras.layers.MaxPooling2D(),
-        tf.keras.layers.Conv2D(32, 3, padding="same", activation="relu"),
-        tf.keras.layers.MaxPooling2D(),
-        tf.keras.layers.Conv2D(64, 3, padding="same", activation="relu"),
-        tf.keras.layers.MaxPooling2D(),
-        tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(128, activation="relu"),
-        tf.keras.layers.Dense(num_classes),
-    ]
-)
-
-# Compile and display the model. On my initial run, I got 0 validation
-# accuracy, I suspect because there was only one example per class.
-#
-model.compile(
-    optimizer="adam",
-    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-    metrics=["accuracy"],
-)
-
-epochs = 10
-# history = model.fit(trains_ds)
-history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
-acc = history.history["accuracy"]
-val_acc = history.history["val_accuracy"]
-
-loss = history.history["loss"]
-val_loss = history.history["val_loss"]
-
-epochs_range = range(epochs)
-
-plt.figure(figsize=(8, 8))
-plt.subplot(1, 2, 1)
-plt.plot(epochs_range, acc, label="Training Accuracy")
-plt.plot(epochs_range, val_acc, label="Validation Accuracy")
-plt.legend(loc="lower right")
-plt.title("Training and Validation Accuracy")
-
-plt.subplot(1, 2, 2)
-plt.plot(epochs_range, loss, label="Training Loss")
-plt.plot(epochs_range, val_loss, label="Validation Loss")
-plt.legend(loc="upper right")
-plt.title("Training and Validation Loss")
-plt.show()

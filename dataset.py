@@ -7,18 +7,29 @@ import tensorflow as tf
 import pathlib
 import albumentations as A
 import cv2
+import scipy
 
 from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 
 # .Path()'s need an absolute path
-data_dir = pathlib.Path("/home/shortcut/envs/tf_wsl/tf_project/images")
-image = cv2.imread("/home/shortcut/envs/tf_wsl/tf_project/images/0/0.png")
+data_dir = pathlib.Path("/Users/shortcut/git/untexify/images")
+image = cv2.imread("/Users/shortcut/git/untexify/images/0/0.png")
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
+transform = A.Compose([A.ElasticTransform(alpha=2, sigma=.9, alpha_affine=10, p=1), ])
+for i in range(10):
+    # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
+    # transformed=A.elastic_transform(image, 3, 2, 13)
+    transformed = transform(image=image)["image"]
+    plt.imshow(transformed)
+    plt.show()
 
-("/home/shortcut/envs/tf_wsl/tf_project/images/")
+
+
+
+
 image_count = len(list(data_dir.glob("*.png")))
 print(image_count)
 batch_size = 2

@@ -48,6 +48,5 @@ for i in range(53):
     imageList = []
     for j in range(200):
         imageList.append(image)
-    transformedList = transform(images=imageList)["images"]
-    plt.imshow(transformedList[0])
-    plt.show()
+    imageArray = np.array(imageList)
+    transformedThing = transform(imageArray)

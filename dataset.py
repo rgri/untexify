@@ -43,7 +43,6 @@ for i in range(53):
     image = cv2.imread(imagePath)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     for j in range(200):
-        if j % 50 == 0:
         # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
         # TODO: Clean up this comment.
         transformed = transform(image=image)["image"]

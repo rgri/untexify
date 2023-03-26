@@ -6,15 +6,17 @@ import PIL.Image
 import tensorflow as tf
 import pathlib
 import albumentations as A
-import cv2 as beebo
+import cv2
 
 from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 
-
 # .Path()'s need an absolute path
 data_dir = pathlib.Path("/home/shortcut/envs/tf_wsl/tf_project/images")
+image = cv2.imread("/home/shortcut/envs/tf_wsl/tf_project/images/0/0.png")
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
 
 ("/home/shortcut/envs/tf_wsl/tf_project/images/")
 image_count = len(list(data_dir.glob("*.png")))

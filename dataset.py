@@ -41,18 +41,13 @@ transform = A.Compose(
 for i in range(53):
     print(i)
     print()
+
     imagePath = "/home/shortcut/git/untexify-data/original_images/" + str(i) + ".png"
     image = cv2.imread(imagePath)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    imageList = []
     for j in range(200):
-        if j % 50 == 0:
-            print(j)
-            print()
-        # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
-        # TODO: Clean up this comment.
-        transformed = transform(image=image)["image"]
-        transformed = np.array(transformed)
-        outName = (
-            "/home/shortcut/git/untexify-data/images/" + str(i) + "/" + str(j) + ".png"
-        )
-        cv2.imwrite(outName, transformed)
+        imageList.append(image)
+    transformedList = transform(images=imageList)["images"]
+    plt.imshow(transformedList[0])
+    plt.show()

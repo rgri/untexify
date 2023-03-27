@@ -93,68 +93,10 @@ plt.show()
 # Run the model on a hand-drawn example
 
 
-# # These are the order of the classes tf.keras.utils.image_dataset_from_directory
-# # forces me to use.
-# modelClasses = [
-#     "<",
-#     ">",
-#     "nless",
-#     "ngtr",
-#     "leq",
-#     "geq",
-#     "leqslant",
-#     "geqslant",
-#     "nleq",
-#     "ngeq",
-#     "nleqslant",
-#     "ngeqslant",
-#     "prec",
-#     "succ",
-#     "nprec",
-#     "nsucc",
-#     "preceq",
-#     "succeq",
-#     "npreceq",
-#     "nsucceq",
-#     "ll",
-#     "gg",
-#     "lll",
-#     "ggg",
-#     "subset",
-#     "supset",
-#     "notsubset",
-#     "notsupset",
-#     "subseteq",
-#     "supseteq",
-#     "nsubseteq",
-#     "nsupseteq",
-#     "sqsubset",
-#     "sqsupset",
-#     "mathbb{N}",
-#     "mathbb{Z}",
-#     "mathbb{Q}",
-#     "mathbb{A}",
-#     "mathbb{R}",
-#     "mathbb{C}",
-#     "mathbb{H}",
-#     "mathbb{O}",
-#     "mathbb{S}",
-#     "in",
-#     "notin",
-#     "ni",
-#     "subset",
-#     "subseteq",
-#     "supset",
-#     "supseteq",
-#     "cup",
-#     "cap",
-#     "setminus",
-# ]
-# image = tf.keras.utils.load_img("myinput.png", color_mode="grayscale")
-# image_array = tf.keras.utils.img_to_array(image)
-# img_array = tf.expand_dims(image_array, 0)
-# modelClasses[np.argmax(tf.nn.softmax(model(img_array)))]
-
+image = tf.keras.utils.load_img("myinput.png", color_mode="grayscale")
+image_array = tf.keras.utils.img_to_array(image)
+img_array = tf.expand_dims(image_array, 0)
+train_ds.class_names[np.argmax(tf.nn.softmax(model(img_array)))]
 # # # For terminal usage; runs the model on the first 200 images in a pre-defined class.
 # # #
 # # for i in range(200):

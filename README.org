@@ -112,6 +112,8 @@ This might be a bit paradoxical, because those symbols which are most popular su
 *** Drawing app
 *** Calling the model
 *** Formatting
+*** Hosting the site
+fly.io perhaps...
 
 * Footnotes
 

@@ -100,9 +100,21 @@ To do this I need a series of "transforms" which will piecewise randomly affect 
 | Uniform color                    | ~A.Equalize()~         |
 | Scale                            |                        |
 |----------------------------------+------------------------|
+***** TODO Translation and scale
+Although a textbook cited at the keras docs mentions that convolution layers /should/ be translation invariant, a cursory test of my model indicates they are definitely not. So, I need to alter the transformation stack accordingly. The model is also not resistant to the scale of the input, so I need to fix that as well.
+***** TODO Stroke
+The model is not resistant to different strokes. Depending on the way I implement the frontend, there may be no reason to train the model to recognize this.
+***** TODO Choose a list of symbols
+Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small latex symbols in the model's format exists[fn:1], and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
+
+This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to lookup the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
 
 *** TODO Train the model
 ** Frontend
 *** Drawing app
 *** Calling the model
 *** Formatting
+
+* Footnotes
+
+[fn:1] Verify this, specifically from [[https://detexify.kirelabs.org/classify.html][detexify]]

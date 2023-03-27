@@ -2,11 +2,12 @@
 * What this is
 This is a placeholder repo for a future Tensorflow project I intend to complete by [2023-03-27 Mon].
 * Road-map
-** TODO Create the dataset
-*** DONE Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
+** Backend
+*** TODO Create the dataset
+**** DONE Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
 
 I simply copied a table's symbols and formatted them into a file such that each piece of LaTeX was on its own line.
-*** DONE Convert them into .png files
+**** DONE Convert them into .png files
 
 I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reference, I placed the file containing my equations called ~equations.txt~ the root of the git repository, then ran from the root:
 #+begin_src bash
@@ -17,7 +18,7 @@ I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert 
     python generate_latex.py
 #+end_src
 I numbered the resulting files using Dired.
-*** DONE Sort them into classes based on their latex code
+**** DONE Sort them into classes based on their latex code
 
 I created my [[file:./images/][images/]] folder, and used this bit of bash magic to sort them into folders sharing their same names:
 #+begin_src bash
@@ -83,7 +84,7 @@ Which resulted in:
 |  8 |
 |  9 |
 
-*** TODO Simulate handwriting by programmatically distorting the .pngs
+**** TODO Simulate handwriting
 
 To do this I need a series of "transforms" which will piecewise randomly affect an aspect of a given image. This prevents overfitting, and in the first phase makes the model functional at all. Here are the aspects of the image I chose to transform:
 
@@ -95,6 +96,13 @@ To do this I need a series of "transforms" which will piecewise randomly affect 
 | Crossing                         |                        |
 | Thickness                        |                        |
 | Width (more stretchy)            |                        |
+| Sharpening                       | ~A.Sharpen()~          |
+| Uniform color                    | ~A.Equalize()~         |
+| Scale                            |                        |
 |----------------------------------+------------------------|
-***
-** TODO Train the model
+
+*** TODO Train the model
+** Frontend
+*** Drawing app
+*** Calling the model
+*** Formatting

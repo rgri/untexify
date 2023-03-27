@@ -19,11 +19,11 @@ data_dir = pathlib.Path("/home/shortcut/git/untexify-data/images")
 # TODO: Explain the reasoning for this choice of transforms.
 transform = A.Compose(
     [
-        A.transforms.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
+        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
         A.ElasticTransform(alpha=20, sigma=10000, alpha_affine=10, p=1),
-        A.transforms.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
-        A.transforms.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
-        A.transforms.Equalize(p=1.0),
+        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
+        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
+        A.Equalize(p=1.0),
     ]
 )
 

@@ -93,12 +93,9 @@ To do this I need a series of "transforms" which will piecewise randomly affect 
 | Writing aspect                   | Transform name         |
 |----------------------------------+------------------------|
 | "wiggliness" or poor handwriting | ~A.ElasticTransform()~ |
-| Orientation/rotation             |                        |
-| Crossing                         |                        |
-| Thickness                        |                        |
-| Width (more stretchy)            |                        |
 | Sharpening                       | ~A.Sharpen()~          |
 | Uniform color                    | ~A.Equalize()~         |
+| Orientation/rotation             |                        |
 | Scale                            |                        |
 |----------------------------------+------------------------|
 ***** TODO Translation and scale

@@ -268,17 +268,14 @@ draw();
     <link href="style.css" rel="stylesheet">
   </head>
   <body>
-    <div class="toolbar">
-      <input type="color" aria-label="select pen color" value="#ffffff">
-      <input type="range" min="2" max="50" value="30" aria-label="select pen size"><span class="output">30</span>
-      <button>Clear canvas</button>
-    </div>
-
-    <canvas class="myCanvas">
+    <canvas class="myCanvas" style="border: 3px solid black;">
       <p>Add suitable fallback here.</p>
     </canvas>
     <canvas class="background">
       </canvas>
+    <div class="toolbar">
+      <button>Clear canvas</button>
+    </div>
   </body>
 </html>
 #+end_export

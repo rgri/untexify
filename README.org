@@ -1,4 +1,5 @@
 #+title: Untexify - a bad clone of [[https://detexify.kirelabs.org/classify.html][Detexify]]
+#+PROPERTY: header-args:html :session first :exports both :results output :tangle codeblocks.py :comments link :noweb-ref 0 :noweb yes
 # TODO: Make this past-tense
 * What this is
 This is a placeholder repo for a future Tensorflow project I intend to complete by [2023-03-27 Mon].
@@ -114,7 +115,171 @@ This might be a bit paradoxical, because those symbols which are most popular su
 *** Formatting
 *** Hosting the site
 fly.io perhaps...
+*** Notes on using Django
+- urlpatterns defined in an /app's/ urls.py are basically mappings from patterns in the url to methods within the views.py file for that app
 
-* Footnotes
+- views.py is a collection of methods which are basically sub-pages of a site[fn:2]
 
-[fn:1] Verify this, specifically from [[https://detexify.kirelabs.org/classify.html][detexify]]
+  - methods in views.py have to return "HttpResponse" calls, but besides that can contain basically any python code
+
+  - you can pass arguments to view by specifying their type and the argument they are assigned to in the following format:
+    #+begin_src html
+    '<int:question_id>/'
+    #+end_src
+
+- Templates an important part of views- in a yourappname/templates/yourappname/ dir, and are basically html files which can take in inputs etc.[fn:3]
+
+  - You can assign variables in a given template to python objects using "contexts"
+
+* HTML Page
+:PROPERTIES:
+:header-args:html: :exports body
+:END:
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+** This website was made using org-mode. Crazy, right?
+This page was created and written entirely within org-mode- don't believe me? Here's an excerpt from the html of the next heading (when exported on its own):
+
+#+begin_src html
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+#+end_src
+**
+
+** Some pictures and the code for my model
+In this heading, we have some pictures which get embedded automatically. Here is a photo of a drawing I use to test the hand-drawn recognition of my model:
+
+[[file:myinput.png]]
+
+When I write this heading in org-mode, I don't see the image above unless I press a key combo (~C-c TAB~), so everything is out of the way just like in a language like CSS or HTML.
+
+However, I also have the benefit of auto-correct and rendered text formatting, so I don't have to stare at a bunch of HTML tags (see [[*This website was made using org-mode. Crazy, right?][here]]).
+
+Here's a photo of the performance of the most recent iteration of my model.
+
+[[file:recentmodelperformance.png]]
+
+#+RESULTS:
+
+Also, here is a video:
+
+#+begin_export html
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bwiLYb5Lv2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+#+end_export
+** Finally, I'll end with a famous Grothendieck quote
+#+begin_quote
+A different image came to me a few weeks ago. The unknown thing to be known appeared to me as some stretch of earth or hard marl, resisting penetration... the sea advances insensibly in silence, nothing seems to happen, nothing moves, the water is so far off you hardly hear it... yet finally it surrounds the resistant substance.
+                                        - Alexander Grothendieck[fn:4]
+#+end_quote
+** Footnotes
+[fn:5] https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
+
+
+[fn:4] https://www.azquotes.com/quote/690590
+* Testing exporting with blocks
+This is the test of an html export with html code-blocks inbuilt.
+#+begin_src javascript :exports none 
+// matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".[fn:5]
+const canvas = document.querySelector('.myCanvas');
+const width = canvas.width = window.innerWidth;
+const height = canvas.height = window.innerHeight - 85;
+const ctx = canvas.getContext('2d');
+
+ctx.fillStyle = 'rgb(0,0,0)';
+ctx.fillRect(0, 0, width, height);
+
+const colorPicker = document.querySelector('input[type="color"]');
+const sizePicker = 4; 
+const output = document.querySelector('.output');
+const clearBtn = document.querySelector('button');
+
+// covert degrees to radians
+function degToRad(degrees) {
+  return degrees * Math.PI / 180;
+};
+
+// update sizepicker output value
+
+sizePicker.addEventListener('input', () => output.textContent = sizePicker.value);
+
+// store mouse pointer coordinates, and whether the button is pressed
+let curX;
+let curY;
+let pressed = false;
+
+// update mouse pointer coordinates
+document.addEventListener('mousemove', e => {
+  curX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+  curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+});
+
+canvas.addEventListener('mousedown', () => pressed = true);
+
+canvas.addEventListener('mouseup', () => pressed = false);
+
+clearBtn.addEventListener('click', () => {
+  ctx.fillStyle = 'rgb(0,0,0)';
+  ctx.fillRect(0, 0, width, height);
+});
+
+function draw() {
+  if (pressed) {
+    ctx.fillStyle = colorPicker.value;
+    ctx.beginPath();
+    ctx.arc(curX, curY - 85, sizePicker.value, degToRad(0), degToRad(360), false);
+    ctx.fill();
+  }
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+#+end_src
+#+begin_export html  :noexport
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bwiLYb5Lv2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+#+end_export
+#+begin_export html
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=width, initial-scale=5.0">
+    <title>Canvas</title>
+    <script src="script.js" defer></script>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="toolbar">
+      <input type="color" aria-label="select pen color" value="#ffffff">
+      <input type="range" min="2" max="50" value="30" aria-label="select pen size"><span class="output">30</span>
+      <button>Clear canvas</button>
+    </div>
+
+    <canvas class="myCanvas">
+      <p>Add suitable fallback here.</p>
+    </canvas>
+    <canvas class="background">
+      </canvas>
+  </body>
+</html>
+#+end_export
+----

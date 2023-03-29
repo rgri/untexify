@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from .forms import DrawingForm
 
 import PIL
-import PIL.Image
+from PIL import Image
 import requests
 from io import BytesIO
 from tensorflow import keras
@@ -13,8 +13,10 @@ from keras import layers
 from keras import models
 import tensorflow as tf
 import numpy as np
+from urllib.request import urlopen
 
 modelDir = "/home/shortcut/git/untexify/model iterations"
+model = keras.models.load_model(modelDir + "/webmodel/")
 HttpResponseRedirect.allowed_schemes.append("data")
 # Create your views here.
 def index(request):
@@ -29,13 +31,12 @@ def get_drawing(request):
     if request.method == "POST":
         form = DrawingForm(request.POST)
         if form.is_valid():
-            model = keras.models.load_model(modelDir + "/webmodel/")
-            image = tf.keras.utils.load_img(
-                form.cleaned_data["drawingLink"], color_mode="grayscale"
-            )
-            image_array = tf.keras.utils.img_to_array(image)
-            img_array = tf.expand_dims(image_array, 0)
-            guess = np.argmax(tf.nn.softmax(model(img_array)))
+            with urlopen(form.cleaned_data["drawingLink"]) as response:
+                image = Image.open(response)
+                image = image.convert("L")
+                image_array = tf.keras.utils.img_to_array(image)
+                img_array = tf.expand_dims(image_array, 0)
+                guess = np.argmax(tf.nn.softmax(model(img_array)))
             return HttpResponse(str(guess))
     form = DrawingForm()
 

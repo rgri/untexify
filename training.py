@@ -97,13 +97,14 @@ image = tf.keras.utils.load_img("myinput.png", color_mode="grayscale")
 image_array = tf.keras.utils.img_to_array(image)
 img_array = tf.expand_dims(image_array, 0)
 train_ds.class_names[np.argmax(tf.nn.softmax(model(img_array)))]
-# # # For terminal usage; runs the model on the first 200 images in a pre-defined class.
-# # #
-# # for i in range(200):
-# #     image = tf.keras.utils.load_img(
-# #         "/home/shortcut/git/untexify-data/images/10/" + str(i) + ".png",
-# #         color_mode="grayscale",
-# #     )
-# #     image_array = tf.keras.utils.img_to_array(image)
-# #     img_array = tf.expand_dims(image_array, 0)
-# #     class_names[np.argmax(tf.nn.softmax(model(img_array)))]
+# # For terminal usage; runs the model on the first 200 images in a pre-defined class.
+#
+# for i in range(200):
+#     image = tf.keras.utils.load_img(
+#         "/home/shortcut/git/untexify-data/images/10/" + str(i) + ".png",
+#         color_mode="grayscale",
+#     )
+#
+#     image_array = tf.keras.utils.img_to_array(image)
+#     img_array = tf.expand_dims(image_array, 0)
+#     class_names[np.argmax(tf.nn.softmax(model(img_array)))]

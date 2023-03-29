@@ -196,6 +196,7 @@ A different image came to me a few weeks ago. The unknown thing to be known appe
 
 [fn:4] https://www.azquotes.com/quote/690590
 * Testing exporting with blocks
+#+EXPORT_FILE_NAME: /home/shortcut/git/untexify/frontend/untexifyweb/testapp/templates/testapp/home.html
 This is the test of an html export with html code-blocks inbuilt.
 #+begin_src javascript :exports none 
 // matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".[fn:5]
@@ -257,26 +258,50 @@ draw();
 #+begin_export html  :noexport
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bwiLYb5Lv2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 #+end_export
+
+
+
+
+
+This is a thing
 #+begin_export html
 <!DOCTYPE html>
+{% load static %}
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=width, initial-scale=5.0">
     <title>Canvas</title>
-    <script src="script.js" defer></script>
-    <link href="style.css" rel="stylesheet">
+    <script src="{% static 'testapp/script.js' %}" defer></script>
   </head>
   <body>
-    <canvas class="myCanvas" style="border: 3px solid black;">
+    <canvas class="myCanvas" id="canvas" style="border: 3px solid black;">
       <p>Add suitable fallback here.</p>
     </canvas>
+    <div class="toolbar">
+        <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+      <button class="clearButton">Clear canvas</button>
+    </div>
     <canvas class="background">
       </canvas>
-    <div class="toolbar">
-      <button>Clear canvas</button>
-    </div>
   </body>
 </html>
 #+end_export
 ----
+* Notes on Django setup :ATTACH:
+:PROPERTIES:
+:ID:       9f218c40-f8cb-4786-ad33-e4cc0033717f
+:END:
+Getting a "Template does not exist" exception/error? [[https://stackoverflow.com/a/73620984][This thread]] worked for me.
+
+** General django website work flow: (rough sketch):
+1. use ~manage.py startapp~
+2. put app name in settings.py
+3. point the maindir's urls.py to your app's urls.py
+4. create views, forms, etc
+5. [[https://docs.djangoproject.com/en/4.1/howto/static-files/][static files]]
+   - when you *deploy*, you must follow that link's instructions.

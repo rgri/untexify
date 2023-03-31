@@ -14,9 +14,26 @@ from keras import models
 import tensorflow as tf
 import numpy as np
 from urllib.request import urlopen
+import pathlib
 
 modelDir = "/home/shortcut/git/untexify/model iterations"
 model = keras.models.load_model(modelDir + "/webmodel/")
+data_dir = pathlib.Path("/home/shortcut/git/untexify-data/images")
+
+batch_size = 100
+img_height = 72
+img_width = 72
+train_ds = tf.keras.utils.image_dataset_from_directory(
+    data_dir,
+    validation_split=0.2,
+    color_mode="grayscale",
+    subset="training",
+    seed=123,
+    image_size=(img_height, img_width),
+    batch_size=batch_size,
+)
+
+
 HttpResponseRedirect.allowed_schemes.append("data")
 # Create your views here.
 def index(request):
@@ -37,7 +54,7 @@ def get_drawing(request):
                 image_array = tf.keras.utils.img_to_array(image)
                 img_array = tf.expand_dims(image_array, 0)
                 guess = np.argmax(tf.nn.softmax(model(img_array)))
-            return HttpResponse(str(guess))
+            return HttpResponse(train_ds.class_names[guess])
     form = DrawingForm()
 
     return render(request, "testapp/home.html", {"form": form})

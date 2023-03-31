@@ -288,6 +288,7 @@ This is a thing
     </div>
     <canvas class="background">
       </canvas>
+      {{ symbol }}
   </body>
 </html>
 #+end_export

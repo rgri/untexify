@@ -8,6 +8,7 @@ import pathlib
 import albumentations as A
 import cv2
 import scipy
+from multiprocessing import Pool
 
 from tensorflow import keras
 from keras import layers
@@ -37,22 +38,31 @@ transform = A.Compose(
 # plt.imshow(transformed)
 # plt.show()
 
-# Generate the dataset
-for i in range(53):
+
+def helper(index):
+    i, j = index
     print(i)
     print()
     imagePath = "/home/shortcut/git/untexify-data/original_images/" + str(i) + ".png"
     image = cv2.imread(imagePath)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    for j in range(200):
-        if j % 50 == 0:
-            print(j)
-            print()
-        # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
-        # TODO: Clean up this comment.
-        transformed = transform(image=image)["image"]
-        transformed = np.array(transformed)
-        outName = (
-            "/home/shortcut/git/untexify-data/images/" + str(i) + "/" + str(j) + ".png"
-        )
-        cv2.imwrite(outName, transformed)
+    if j % 50 == 0:
+        print("This is j")
+        print()
+        print(j)
+        print()
+    # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
+    # TODO: Clean up this comment.
+    transformed = transform(image=image)["image"]
+    transformed = np.array(transformed)
+    outName = (
+        "/home/shortcut/git/untexify-data/images/" + str(i) + "/" + str(j) + ".png"
+    )
+    cv2.imwrite(outName, transformed)
+
+
+# Generate the dataset
+with Pool(10) as p:
+    p.map(
+        helper, [(x, y) for x in range(53) for y in range(200)]
+    )  # generate the cartesian product [0 .. 52] X [0 .. 199]

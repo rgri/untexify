@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from .forms import DrawingForm
 
 import PIL
+import os
 from PIL import Image
 import requests
 from io import BytesIO
@@ -15,24 +16,11 @@ import tensorflow as tf
 import numpy as np
 from urllib.request import urlopen
 import pathlib
+from django.conf import settings
 
+STATIC_ROOT = settings.STATIC_ROOT
 modelDir = "/home/shortcut/git/untexify/model iterations"
-model = keras.models.load_model(modelDir + "/webmodel/")
-data_dir = pathlib.Path("/home/shortcut/git/untexify-data/images")
-
-batch_size = 100
-img_height = 72
-img_width = 72
-train_ds = tf.keras.utils.image_dataset_from_directory(
-    data_dir,
-    validation_split=0.2,
-    color_mode="grayscale",
-    subset="training",
-    seed=123,
-    image_size=(img_height, img_width),
-    batch_size=batch_size,
-)
-
+model = keras.models.load_model(os.path.join(STATIC_ROOT , "testapp/webmodel/"))
 
 HttpResponseRedirect.allowed_schemes.append("data")
 # Create your views here.
@@ -54,7 +42,7 @@ def get_drawing(request):
                 image_array = tf.keras.utils.img_to_array(image)
                 img_array = tf.expand_dims(image_array, 0)
                 guess = np.argmax(tf.nn.softmax(model(img_array)))
-            return HttpResponse(train_ds.class_names[guess])
+            return HttpResponse(guess)
     form = DrawingForm()
 
     return render(request, "testapp/home.html", {"form": form})

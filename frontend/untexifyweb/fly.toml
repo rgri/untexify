@@ -8,5 +8,6 @@ primary_region = "ord"
   PORT = "8000"
 
 [[statics]]
-  guest_path = "/code/static"
-  url_prefix = "/static/"
+  guest_path = "/code/staticfiles"
+  url_prefix = "/static"
+

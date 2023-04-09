@@ -29,8 +29,8 @@ DEBUG = False
 # FIXME: This /needs/ to be changed. A wildcard match for all hosts
 # /is/ a security vulnerability, allowing attackers to forcibly
 # redirect users to a URL on any domain.
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'untexify-web.fly.dev']
-CSRF_TRUSTED_ORIGINS = ['untexify-web.fly.dev']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'untexifyweb.fly.dev']
+CSRF_TRUSTED_ORIGINS = ['untexifyweb.fly.dev/*']
 
 
 # Application definition

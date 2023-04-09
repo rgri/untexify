@@ -1,0 +1,12 @@
+# fly.toml file generated for untexify-web on 2023-04-08T19:12:30-05:00
+
+app = "untexify-web"
+kill_timeout = 0
+primary_region = "ord"
+
+[env]
+  PORT = "8000"
+
+[[statics]]
+  guest_path = "/code/static"
+  url_prefix = "/static/"

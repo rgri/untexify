@@ -30,7 +30,7 @@ DEBUG = False
 # /is/ a security vulnerability, allowing attackers to forcibly
 # redirect users to a URL on any domain.
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'untexifyweb.fly.dev']
-CSRF_TRUSTED_ORIGINS = ['untexifyweb.fly.dev/*']
+CSRF_TRUSTED_ORIGINS = ['https://untexifyweb.fly.dev/*/']
 
 
 # Application definition

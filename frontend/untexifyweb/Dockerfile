@@ -18,8 +18,8 @@ RUN set -ex && \
 
 COPY . /code/
 
-RUN --mount=type=secret,id=SECRET_KEY \
-    SECRET_KEY="$(cat /run/secrets/SECRET_KEY)" python manage.py collectstatic --noinput
+ENV SECRET_KEY="dumbkey"
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 

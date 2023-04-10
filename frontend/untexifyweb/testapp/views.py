@@ -19,8 +19,62 @@ import pathlib
 from django.conf import settings
 
 STATIC_ROOT = settings.STATIC_ROOT
-modelDir = "/home/shortcut/git/untexify/model iterations"
-model = keras.models.load_model(os.path.join(STATIC_ROOT , "testapp/webmodel/"))
+model = keras.models.load_model(os.path.join(STATIC_ROOT, "testapp/webmodel/"))
+class_names = [
+    "cap",
+    "cup",
+    "geq",
+    "geqslant",
+    "gg",
+    "ggg",
+    "greaterthan",
+    "in",
+    "leq",
+    "leqslant",
+    "lessthan",
+    "ll",
+    "lll",
+    "mathbb{A}",
+    "mathbb{C}",
+    "mathbb{H}",
+    "mathbb{N}",
+    "mathbb{O}",
+    "mathbb{Q}",
+    "mathbb{R}",
+    "mathbb{S}",
+    "mathbb{Z}",
+    "ngeq",
+    "ngeqslant",
+    "ngtr",
+    "ni",
+    "nleq",
+    "nleqslant",
+    "nless",
+    "not ubset",
+    "not upset",
+    "notin",
+    "nprec",
+    "npreceq",
+    "nsubseteq",
+    "nsucc",
+    "nsucceq",
+    "nsupseteq",
+    "prec",
+    "preceq",
+    "setminus",
+    "sqsubset",
+    "sqsupset",
+    "subset",
+    "subset2",
+    "subseteq",
+    "subseteq2",
+    "succ",
+    "succeq",
+    "supset",
+    "supset2",
+    "supseteq",
+    "supseteq2",
+]
 
 HttpResponseRedirect.allowed_schemes.append("data")
 # Create your views here.
@@ -41,7 +95,7 @@ def get_drawing(request):
                 image = image.convert("L")
                 image_array = tf.keras.utils.img_to_array(image)
                 img_array = tf.expand_dims(image_array, 0)
-                guess = np.argmax(tf.nn.softmax(model(img_array)))
+                guess = class_names[np.argmax(tf.nn.softmax(model(img_array)))]
             return HttpResponse(guess)
     form = DrawingForm()
 

@@ -14,8 +14,7 @@ from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 
-# .Path()'s need an absolute path
-data_dir = pathlib.Path("/home/shortcut/git/untexify-data/images")
+original_images = os.listdir("/home/shortcut/git/untexify-data/original_images")
 
 # TODO: Explain the reasoning for this choice of transforms.
 transform = A.Compose(
@@ -43,7 +42,7 @@ def helper(index):
     i, j = index
     print(i)
     print()
-    imagePath = "/home/shortcut/git/untexify-data/original_images/" + str(i) + ".png"
+    imagePath = "/home/shortcut/git/untexify-data/original_images/" + i
     image = cv2.imread(imagePath)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     if j % 50 == 0:
@@ -56,13 +55,21 @@ def helper(index):
     transformed = transform(image=image)["image"]
     transformed = np.array(transformed)
     outName = (
-        "/home/shortcut/git/untexify-data/images/" + str(i) + "/" + str(j) + ".png"
+        "/home/shortcut/git/untexify-data/images/" + i[:-4] + "/" + str(j) + ".png"
     )
+
     cv2.imwrite(outName, transformed)
 
+
+# Generate the class directories
+for i in original_images:
+    try:
+        os.mkdir("/home/shortcut/git/untexify-data/images/" + i[:-4])
+    except:
+        pass
 
 # Generate the dataset
 with Pool(10) as p:
     p.map(
-        helper, [(x, y) for x in range(53) for y in range(2000)]
+        helper, [(x, y) for x in original_images for y in range(20)]
     )  # generate the cartesian product [0 .. 52] X [0 .. 199]

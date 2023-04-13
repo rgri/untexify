@@ -110,26 +110,16 @@ This might be a bit paradoxical, because those symbols which are most popular su
 
 *** TODO Train the model
 ** Frontend
-*** Drawing app
-*** Calling the model
-*** Formatting
-*** Hosting the site
-fly.io perhaps...
-*** Notes on using Django
-- urlpatterns defined in an /app's/ urls.py are basically mappings from patterns in the url to methods within the views.py file for that app
-
-- views.py is a collection of methods which are basically sub-pages of a site[fn:2]
-
-  - methods in views.py have to return "HttpResponse" calls, but besides that can contain basically any python code
-
-  - you can pass arguments to view by specifying their type and the argument they are assigned to in the following format:
-    #+begin_src html
-    '<int:question_id>/'
-    #+end_src
-
-- Templates an important part of views- in a yourappname/templates/yourappname/ dir, and are basically html files which can take in inputs etc.[fn:3]
-
-  - You can assign variables in a given template to python objects using "contexts"
+*** DONE Hosting
+CLOSED: [2023-04-13 Thu 05:14]
+:LOGBOOK:
+- State "DONE"       from              [2023-04-13 Thu 05:14]
+:END:
+To host this project I used [[https://fly.io/][fly.io]] for its excellent integration with [[https://www.djangoproject.com/][Django]], which was used to construct the frontend. Fly.io extremely simple installation instructions for a number of web-app libraries for popular languages, and it was overall very simple to use for someone not experienced in website hosting like myself.
+*** Website structure
+The frontend's structure was made entirely using Django, which was excellent for me as someone with lots of python experience, and little HTML or CSS experience.
+Most of the interface between the model (which was made using another python library, Tensorflow) and the page was handled in a single [[file:frontend/untexifyweb/testapp/views.py][views.py]] file. Python acted as the glue between Django and Tensorflow, which was extremely helpful and satisfying to work with.
+Those parts of the website I needed to actually delve into HTML for, were done almost entirely using org-mode's helpful HTML export. I could export large swaths of org-mode documents to a nice-looking CSS "frame", while embedding HTML within the plain org text for seamless integration into the final product.
 
 * HTML Page
 :PROPERTIES:
@@ -258,11 +248,6 @@ draw();
 #+begin_export html  :noexport
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bwiLYb5Lv2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 #+end_export
-
-
-
-
-
 This is a thing
 #+begin_export html
 <!DOCTYPE html>
@@ -292,17 +277,3 @@ This is a thing
   </body>
 </html>
 #+end_export
-----
-* Notes on Django setup :ATTACH:
-:PROPERTIES:
-:ID:       9f218c40-f8cb-4786-ad33-e4cc0033717f
-:END:
-Getting a "Template does not exist" exception/error? [[https://stackoverflow.com/a/73620984][This thread]] worked for me.
-
-** General django website work flow: (rough sketch):
-1. use ~manage.py startapp~
-2. put app name in settings.py
-3. point the maindir's urls.py to your app's urls.py
-4. create views, forms, etc
-5. [[https://docs.djangoproject.com/en/4.1/howto/static-files/][static files]]
-   - when you *deploy*, you must follow that link's instructions.

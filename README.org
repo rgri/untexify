@@ -4,7 +4,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 # DONE: Make this past-tense
 * What this is
-Untexify is handwriting-to- $\LaTeX$ dictionary. $\LaTeX$ is the most popular markup language for technical documents in mathematics, and is widely used throughout computer science and industry.
+Untexify is a handwriting-to- $\LaTeX$ dictionary. $\LaTeX$ is the most popular markup language for technical documents in mathematics, and is widely used throughout computer science and industry.
 
 However, its mnemonic conventions for symbols are old and debatably antiquated. Many beginning researchers and students of the sciences find difficulty remembering the $\LaTeX$ name for a certain symbol. Untexify is an interactive canvas which will return the closest $\LaTeX$ code for any symbol drawn on it.
 

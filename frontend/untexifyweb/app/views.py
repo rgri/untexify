@@ -19,7 +19,7 @@ import pathlib
 from django.conf import settings
 
 STATIC_ROOT = settings.STATIC_ROOT
-model = keras.models.load_model(os.path.join(STATIC_ROOT, "testapp/webmodel/"))
+model = keras.models.load_model(os.path.join(STATIC_ROOT, "app/webmodel/"))
 class_names = [
     "cap",
     "cup",
@@ -79,7 +79,7 @@ class_names = [
 HttpResponseRedirect.allowed_schemes.append("data")
 # Create your views here.
 def index(request):
-    return render(request, "testapp/index.html", {})
+    return render(request, "app/index.html", {})
 
 
 def runOnTrainedModel(drawing):
@@ -99,7 +99,7 @@ def get_drawing(request):
             return HttpResponse(guess)
     form = DrawingForm()
 
-    return render(request, "testapp/home.html", {"form": form})
+    return render(request, "app/home.html", {"form": form})
 
 
 def quadratic(request, x):

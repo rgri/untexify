@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.redirects",
-    "testapp",
+    "app",
     "django.contrib.sites",
 ]
 SITE_ID = 1

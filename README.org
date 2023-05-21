@@ -106,15 +106,12 @@ The model is not resistant to different strokes. Depending on the way I implemen
 ***** TODO Choose a list of symbols
 Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small latex symbols in the model's format exists[fn:1], and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
 
-This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to lookup the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
+This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to look up the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
 
 *** TODO Train the model
 ** Frontend
 *** DONE Hosting
 CLOSED: [2023-04-13 Thu 05:14]
-:LOGBOOK:
-- State "DONE"       from              [2023-04-13 Thu 05:14]
-:END:
 To host this project I used [[https://fly.io/][fly.io]] for its excellent integration with [[https://www.djangoproject.com/][Django]], which was used to construct the frontend. Fly.io extremely simple installation instructions for a number of web-app libraries for popular languages, and it was overall very simple to use for someone not experienced in website hosting like myself.
 *** Website structure
 The frontend's structure was made entirely using Django, which was excellent for me as someone with lots of python experience, and little HTML or CSS experience.
@@ -122,10 +119,11 @@ Most of the interface between the model (which was made using another python lib
 Those parts of the website I needed to actually delve into HTML for, were done almost entirely using org-mode's helpful HTML export. I could export large swaths of org-mode documents to a nice-looking CSS "frame", while embedding HTML within the plain org text for seamless integration into the final product.
 
 * Testing exporting with blocks
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 #+EXPORT_FILE_NAME: /home/shortcut/git/untexify/frontend/untexifyweb/testapp/templates/testapp/home.html
-This is the test of an html export with html code-blocks inbuilt.
-#+begin_src javascript :exports none 
-// matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".[fn:5]
+This block is the code for the HTML canvas responsible for accepting user input, in the form of hand-drawn approximations of the symbol they are trying to look up.
+#+begin_src javascript :exports none
+// matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".
 const canvas = document.querySelector('.myCanvas');
 const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight - 85;
@@ -181,10 +179,6 @@ function draw() {
 
 draw();
 #+end_src
-#+begin_export html  :noexport
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bwiLYb5Lv2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-#+end_export
-This is a thing
 #+begin_export html
 <!DOCTYPE html>
 {% load static %}

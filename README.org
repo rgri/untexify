@@ -1,5 +1,6 @@
 #+title: Untexify - a bad clone of [[https://detexify.kirelabs.org/classify.html][Detexify]]
 #+STARTUP:     latexpreview
+#+STARTUP:     nologdone
 #+PROPERTY: header-args:html :session first :exports both :results output :tangle codeblocks.py :comments link :noweb-ref 0 :noweb yes
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 # DONE: Make this past-tense
@@ -117,7 +118,8 @@ Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial
 
 This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to look up the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
 
-*** Train the model
+*** TODO Train the model
+
 ** Frontend
 *** Hosting
 To host this project I used [[https://fly.io/][fly.io]] for its excellent integration with [[https://www.djangoproject.com/][Django]], which was used to construct the frontend. Fly.io extremely simple installation instructions for a number of web-app libraries for popular languages, and it was overall very simple to use for someone not experienced in website hosting like myself.

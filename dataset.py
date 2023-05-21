@@ -16,7 +16,12 @@ from keras.models import Sequential
 
 original_images = os.listdir("/home/shortcut/git/untexify-data/original_images")
 
-# TODO: Explain the reasoning for this choice of transforms.
+# DONE: Explain the reasoning for this choice of transforms.
+# The transforms compenents were chosen as follows:
+# Sharpen() will preliminarily de-noise the image.
+# ElasticTransform() "squiggles" the image to simulate handwriting.
+# Next, we Sharpen() the image twice to severely denoise.
+# Equalize() will remove color differences to match the input method on the frontend
 transform = A.Compose(
     [
         A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
@@ -50,8 +55,8 @@ def helper(index):
         print()
         print(j)
         print()
-    # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
-    # TODO: Clean up this comment.
+    # Sigma is "squiggliness", and Alpha is movement? alpha_affine is how much it moves across the page.
+    # DONE: Clean up this comment.
     transformed = transform(image=image)["image"]
     transformed = np.array(transformed)
     outName = (

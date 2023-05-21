@@ -1,15 +1,21 @@
 #+title: Untexify - a bad clone of [[https://detexify.kirelabs.org/classify.html][Detexify]]
 #+PROPERTY: header-args:html :session first :exports both :results output :tangle codeblocks.py :comments link :noweb-ref 0 :noweb yes
-# TODO: Make this past-tense
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+# DONE: Make this past-tense
 * What this is
-This is a placeholder repo for a future Tensorflow project I intend to complete by [2023-03-27 Mon].
+Untexify is handwriting-to-$\LaTeX$ dictionary. $\LaTeX$ is the most popular markup language for technical documents in mathematics, and is widely used throughout computer science and industry.
+However, its mnemonic conventions for symbols are old and debatably antiquated. Many beginning researchers and students of the sciences find difficulty remembering the $\LaTeX$ name for a certain symbol. Untexify is an interactive canvas which will return the closest $\LaTeX$ code for any symbol drawn on it.
+This is accomplished using an OCR machine learning model written in Python using TensorFlow, which is then ran in a webapp created with [[https://www.djangoproject.com/][Django]] hosted online with the help of [[https://fly.io/][fly.io]].
+The training dataset was not hand-drawn, like in the case of many other MNIST-like models. Rather, it was programmatically generated using an image-transformation pipeline created with the [[https://albumentations.ai/][Albumentations]] library. This way, I didn't have to find or write myself thousands of hand-drawn $\LaTeX$.
+This entire project was planned and conceived in the lovely [[https://orgmode.org/][Org-mode]], as Emacs is my primary development tool. The website was itself written as a series of HTML and Javascript codeblocks which were tangled together using Org-mode's exporting functionality.
+This README is also my planning document, and contains annotations and citations for the various steps of the project. This is not only to lower the barrier of entry to someone trying something similar, but also for my future reference.
 * Road-map
 ** Backend
-*** TODO Create the dataset
-**** DONE Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
+*** Create the dataset
+**** Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
 
 I simply copied a table's symbols and formatted them into a file such that each piece of LaTeX was on its own line.
-**** DONE Convert them into .png files
+**** Convert them into .png files
 
 I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reference, I placed the file containing my equations called ~equations.txt~ the root of the git repository, then ran from the root:
 #+begin_src bash
@@ -20,17 +26,13 @@ I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert 
     python generate_latex.py
 #+end_src
 I numbered the resulting files using Dired.
-**** DONE Sort them into classes based on their latex code
+**** Sort them into classes based on their latex code
 
-I created my [[file:./images/][images/]] folder, and used this bit of bash magic to sort them into folders sharing their same names:
+I created my images folder, and used this bit of bash magic to sort them into subfolders sharing their same names:
 #+begin_src bash
     for i in $(seq 0 $IMAGE_COUNT); do mkdir $i; mv $i.png $i/; done
 #+end_src
 Which resulted in:
-#+begin_src bash :results
-    ls ./images
-#+end_src
-
 #+results:
 |  0 |
 |  1 |
@@ -86,7 +88,7 @@ Which resulted in:
 |  8 |
 |  9 |
 
-**** TODO Simulate handwriting
+**** Simulate handwriting
 
 To do this I need a series of "transforms" which will piecewise randomly affect an aspect of a given image. This prevents overfitting, and in the first phase makes the model functional at all. Here are the aspects of the image I chose to transform:
 
@@ -99,19 +101,18 @@ To do this I need a series of "transforms" which will piecewise randomly affect 
 | Orientation/rotation             |                        |
 | Scale                            |                        |
 |----------------------------------+------------------------|
-***** TODO Translation and scale
+***** Translation and scale
 Although a textbook cited at the keras docs mentions that convolution layers /should/ be translation invariant, a cursory test of my model indicates they are definitely not. So, I need to alter the transformation stack accordingly. The model is also not resistant to the scale of the input, so I need to fix that as well.
-***** TODO Stroke
+***** Stroke
 The model is not resistant to different strokes. Depending on the way I implement the frontend, there may be no reason to train the model to recognize this.
-***** TODO Choose a list of symbols
-Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small latex symbols in the model's format exists[fn:1], and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
+***** Choose a list of symbols
+Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small latex symbols in the model's format exists, and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
 
 This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to look up the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
 
-*** TODO Train the model
+*** Train the model
 ** Frontend
-*** DONE Hosting
-CLOSED: [2023-04-13 Thu 05:14]
+*** Hosting
 To host this project I used [[https://fly.io/][fly.io]] for its excellent integration with [[https://www.djangoproject.com/][Django]], which was used to construct the frontend. Fly.io extremely simple installation instructions for a number of web-app libraries for popular languages, and it was overall very simple to use for someone not experienced in website hosting like myself.
 *** Website structure
 The frontend's structure was made entirely using Django, which was excellent for me as someone with lots of python experience, and little HTML or CSS experience.
@@ -119,9 +120,8 @@ Most of the interface between the model (which was made using another python lib
 Those parts of the website I needed to actually delve into HTML for, were done almost entirely using org-mode's helpful HTML export. I could export large swaths of org-mode documents to a nice-looking CSS "frame", while embedding HTML within the plain org text for seamless integration into the final product.
 
 * Testing exporting with blocks
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 #+EXPORT_FILE_NAME: /home/shortcut/git/untexify/frontend/untexifyweb/testapp/templates/testapp/home.html
-This block is the code for the HTML canvas responsible for accepting user input, in the form of hand-drawn approximations of the symbol they are trying to look up.
+This block is the javascript code for the HTML canvas responsible for accepting user input, in the form of hand-drawn approximations of the symbol they are trying to look up.
 #+begin_src javascript :exports none
 // matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".
 const canvas = document.querySelector('.myCanvas');
@@ -179,6 +179,7 @@ function draw() {
 
 draw();
 #+end_src
+Now, we render embed the user-facing HTML elements onto the page.
 #+begin_export html
 <!DOCTYPE html>
 {% load static %}

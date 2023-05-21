@@ -56,7 +56,7 @@ model = tf.keras.Sequential(
 )
 
 # Compile and display the model.
-# TODO: Comment cleanup.
+# DONE: Comment cleanup.
 model.compile(
     optimizer="adam",
     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -65,8 +65,7 @@ model.compile(
 
 # This is a magic number.
 epochs = 10
-# TODO: Comment cleanup.
-# history = model.fit(trains_ds)
+# DONE: Comment cleanup.
 history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
 acc = history.history["accuracy"]
 val_acc = history.history["val_accuracy"]

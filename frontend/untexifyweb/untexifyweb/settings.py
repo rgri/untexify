@@ -26,11 +26,11 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# FIXME: This /needs/ to be changed. A wildcard match for all hosts
+# DONE: This /needs/ to be changed. A wildcard match for all hosts
 # /is/ a security vulnerability, allowing attackers to forcibly
 # redirect users to a URL on any domain.
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'untexifyweb.fly.dev']
-CSRF_TRUSTED_ORIGINS = ['https://untexifyweb.fly.dev/*/']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "untexifyweb.fly.dev"]
+CSRF_TRUSTED_ORIGINS = ["https://untexifyweb.fly.dev/*/"]
 
 
 # Application definition
@@ -118,7 +118,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT=BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

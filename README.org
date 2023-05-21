@@ -8,7 +8,7 @@ Untexify is a handwriting-to- $\LaTeX$ dictionary. $\LaTeX$ is the most popular 
 
 However, its mnemonic conventions for symbols are old and debatably antiquated. Many beginning researchers and students of the sciences find difficulty remembering the $\LaTeX$ name for a certain symbol. Untexify is an interactive canvas which will return the closest $\LaTeX$ code for any symbol drawn on it.
 
-This is accomplished using an OCR machine learning model written in Python using TensorFlow, which is then ran in a webapp created with [[https://www.djangoproject.com/][Django]] hosted online with the help of [[https://fly.io/][fly.io]].
+This is accomplished using an OCR machine learning model written in Python using TensorFlow, which is then ran in a webapp created with [[https://www.djangoproject.com/][Django]] and hosted online with the help of [[https://fly.io/][fly.io]].
 
 The training dataset was not hand-drawn, like in the case of many other MNIST-like models. Rather, it was programmatically generated using an image-transformation pipeline created with the [[https://albumentations.ai/][Albumentations]] library. This way, I didn't have to find or write myself thousands of hand-drawn $\LaTeX$.
 
@@ -113,7 +113,7 @@ Although a textbook cited at the keras docs mentions that convolution layers /sh
 ***** Stroke
 The model is not resistant to different strokes. Depending on the way I implement the frontend, there may be no reason to train the model to recognize this.
 ***** Choose a list of symbols
-Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small $\LaTeX$ symbols in the model's format exists, and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
+Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of $\not$'s (\not's). Because no large public facing database of small $\LaTeX$ symbols in the model's format exists, and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
 
 This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to look up the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
 
@@ -123,11 +123,17 @@ This might be a bit paradoxical, because those symbols which are most popular su
 To host this project I used [[https://fly.io/][fly.io]] for its excellent integration with [[https://www.djangoproject.com/][Django]], which was used to construct the frontend. Fly.io extremely simple installation instructions for a number of web-app libraries for popular languages, and it was overall very simple to use for someone not experienced in website hosting like myself.
 *** Website structure
 The frontend's structure was made entirely using Django, which was excellent for me as someone with lots of python experience, and little HTML or CSS experience.
+
 Most of the interface between the model (which was made using another python library, Tensorflow) and the page was handled in a single [[file:frontend/untexifyweb/testapp/views.py][views.py]] file. Python acted as the glue between Django and Tensorflow, which was extremely helpful and satisfying to work with.
+
 Those parts of the website I needed to actually delve into HTML for, were done almost entirely using org-mode's helpful HTML export. I could export large swaths of org-mode documents to a nice-looking CSS "frame", while embedding HTML within the plain org text for seamless integration into the final product.
 
-* Testing exporting with blocks
+*** Exporting the code
 #+EXPORT_FILE_NAME: /home/shortcut/git/untexify/frontend/untexifyweb/testapp/templates/testapp/home.html
+This section contains the real code I am using for some Untexify's user-facing elements. They are written as code blocks, which are themselves tangled and merged together within Org-mode's exported HTML file, and are placed automatically where Django expects them to be.
+
+The utility of a literate configuration in this case is debatable, and it exists mostly as a proof-of-concept, and convenient since most of my other design lives within Emacs. With the use of [[https://orgmode.org/manual/CSS-support.html][custom stylesheet]] functionality, however, I can quickly alter the look of the site at anytime, with minimal effort.
+
 This block is the javascript code for the HTML canvas responsible for accepting user input, in the form of hand-drawn approximations of the symbol they are trying to look up.
 #+begin_src javascript :exports none
 // matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".

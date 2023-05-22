@@ -93,4 +93,210 @@ To do this I need a series of "transforms" which will piecewise randomly affect 
 | Orientation/rotation             |                        |
 | Crossing                         |                        |
 |----------------------------------+------------------------|
+<<<<<<< Updated upstream
 ** TODO Train the model
+=======
+***** TODO Translation and scale
+Although a textbook cited at the keras docs mentions that convolution layers /should/ be translation invariant, a cursory test of my model indicates they are definitely not. So, I need to alter the transformation stack accordingly. The model is also not resistant to the scale of the input, so I need to fix that as well.
+***** TODO Stroke
+The model is not resistant to different strokes. Depending on the way I implement the frontend, there may be no reason to train the model to recognize this.
+***** TODO Choose a list of symbols
+Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small latex symbols in the model's format exists[fn:1], and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
+
+This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to lookup the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
+
+*** TODO Train the model
+** Frontend
+*** Drawing app
+*** Calling the model
+*** Formatting
+*** Hosting the site
+fly.io perhaps...
+*** Notes on using Django
+- urlpatterns defined in an /app's/ urls.py are basically mappings from patterns in the url to methods within the views.py file for that app
+
+- views.py is a collection of methods which are basically sub-pages of a site[fn:2]
+
+  - methods in views.py have to return "HttpResponse" calls, but besides that can contain basically any python code
+
+  - you can pass arguments to view by specifying their type and the argument they are assigned to in the following format:
+    #+begin_src html
+    '<int:question_id>/'
+    #+end_src
+
+- Templates an important part of views- in a yourappname/templates/yourappname/ dir, and are basically html files which can take in inputs etc.[fn:3]
+
+  - You can assign variables in a given template to python objects using "contexts"
+
+* HTML Page
+:PROPERTIES:
+:header-args:html: :exports body
+:END:
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+** This website was made using org-mode. Crazy, right?
+This page was created and written entirely within org-mode- don't believe me? Here's an excerpt from the html of the next heading (when exported on its own):
+
+#+begin_src html
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+#+end_src
+**
+
+** Some pictures and the code for my model
+In this heading, we have some pictures which get embedded automatically. Here is a photo of a drawing I use to test the hand-drawn recognition of my model:
+
+[[file:myinput.png]]
+
+When I write this heading in org-mode, I don't see the image above unless I press a key combo (~C-c TAB~), so everything is out of the way just like in a language like CSS or HTML.
+
+However, I also have the benefit of auto-correct and rendered text formatting, so I don't have to stare at a bunch of HTML tags (see [[*This website was made using org-mode. Crazy, right?][here]]).
+
+Here's a photo of the performance of the most recent iteration of my model.
+
+[[file:recentmodelperformance.png]]
+
+#+RESULTS:
+
+Also, here is a video:
+
+#+begin_export html
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bwiLYb5Lv2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+#+end_export
+** Finally, I'll end with a famous Grothendieck quote
+#+begin_quote
+A different image came to me a few weeks ago. The unknown thing to be known appeared to me as some stretch of earth or hard marl, resisting penetration... the sea advances insensibly in silence, nothing seems to happen, nothing moves, the water is so far off you hardly hear it... yet finally it surrounds the resistant substance.
+                                        - Alexander Grothendieck[fn:4]
+#+end_quote
+** Footnotes
+[fn:5] https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
+
+
+[fn:4] https://www.azquotes.com/quote/690590
+* Testing exporting with blocks
+#+EXPORT_FILE_NAME: /home/shortcut/git/untexify/frontend/untexifyweb/testapp/templates/testapp/home.html
+This is the test of an html export with html code-blocks inbuilt.
+#+begin_src javascript :exports none 
+// matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".[fn:5]
+const canvas = document.querySelector('.myCanvas');
+const width = canvas.width = window.innerWidth;
+const height = canvas.height = window.innerHeight - 85;
+const ctx = canvas.getContext('2d');
+
+ctx.fillStyle = 'rgb(0,0,0)';
+ctx.fillRect(0, 0, width, height);
+
+const colorPicker = document.querySelector('input[type="color"]');
+const sizePicker = 4; 
+const output = document.querySelector('.output');
+const clearBtn = document.querySelector('button');
+
+// covert degrees to radians
+function degToRad(degrees) {
+  return degrees * Math.PI / 180;
+};
+
+// update sizepicker output value
+
+sizePicker.addEventListener('input', () => output.textContent = sizePicker.value);
+
+// store mouse pointer coordinates, and whether the button is pressed
+let curX;
+let curY;
+let pressed = false;
+
+// update mouse pointer coordinates
+document.addEventListener('mousemove', e => {
+  curX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+  curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+});
+
+canvas.addEventListener('mousedown', () => pressed = true);
+
+canvas.addEventListener('mouseup', () => pressed = false);
+
+clearBtn.addEventListener('click', () => {
+  ctx.fillStyle = 'rgb(0,0,0)';
+  ctx.fillRect(0, 0, width, height);
+});
+
+function draw() {
+  if (pressed) {
+    ctx.fillStyle = colorPicker.value;
+    ctx.beginPath();
+    ctx.arc(curX, curY - 85, sizePicker.value, degToRad(0), degToRad(360), false);
+    ctx.fill();
+  }
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+#+end_src
+#+begin_export html  :noexport
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bwiLYb5Lv2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+#+end_export
+This is a thing
+#+begin_export html
+<!DOCTYPE html>
+{% load static %}
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=width, initial-scale=5.0">
+    <title>Canvas</title>
+    <script src="{% static 'testapp/script.js' %}" defer></script>
+  </head>
+  <body>
+    <canvas class="myCanvas" id="canvas" style="border: 3px solid black;">
+      <p>Add suitable fallback here.</p>
+    </canvas>
+    <div class="toolbar">
+        <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+      <button class="clearButton">Clear canvas</button>
+    </div>
+    <canvas class="background">
+      </canvas>
+      {{ symbol }}
+  </body>
+</html>
+#+end_export
+* test
+hello
+* Notes on Django setup :ATTACH:
+:PROPERTIES:
+:ID:       9f218c40-f8cb-4786-ad33-e4cc0033717f
+:END:
+Getting a "Template does not exist" exception/error? [[https://stackoverflow.com/a/73620984][This thread]] worked for me.
+
+** General django website work flow: (rough sketch):
+1. use ~manage.py startapp~
+2. put app name in settings.py
+3. point the maindir's urls.py to your app's urls.py
+4. create views, forms, etc
+5. [[https://docs.djangoproject.com/en/4.1/howto/static-files/][static files]]
+   - when you *deploy*, you must follow that link's instructions.
+>>>>>>> Stashed changes

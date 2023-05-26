@@ -11,11 +11,9 @@ However, its mnemonic conventions for symbols are old and debatably antiquated. 
 
 This is accomplished using an OCR machine learning model written in Python using TensorFlow, which is then ran in a webapp created with [[https://www.djangoproject.com/][Django]] and hosted online with the help of [[https://fly.io/][fly.io]].
 
-The training dataset was not hand-drawn, like in the case of many other MNIST-like models. Rather, it was programmatically generated using an image-transformation pipeline created with the [[https://albumentations.ai/][Albumentations]] library. This way, I didn't have to find or write myself thousands of hand-drawn $\LaTeX$.
+The training dataset was not hand-drawn, like in the case of many other MNIST-like models. Rather, it was programmatically generated using an image-transformation pipeline created with the [[https://albumentations.ai/][Albumentations]] library. This way, I didn't have to find or write myself thousands of hand-drawn $\LaTeX$ symbols.
 
-This entire project was planned and conceived in the lovely [[https://orgmode.org/][Org-mode]], as Emacs is my primary development tool. The website was itself written as a series of HTML and Javascript codeblocks which were tangled together using Org-mode's exporting functionality.
-
-This README is also my planning document, and contains annotations and citations for the various steps of the project. This is not only to lower the barrier of entry to someone trying something similar, but also for my future reference.
+This entire project was planned and conceived in the lovely [[https://orgmode.org/][Org-mode]], as Emacs is my primary development environment. The website was itself written as a series of HTML and Javascript codeblocks which were tangled together using Org-mode's exporting functionality.
 
 * Road-map
 ** Backend

@@ -133,7 +133,7 @@ This entire project was planned and conceived in the lovely [[https://orgmode.or
       draw();
       #+END_SRC
       Now, we render embed the user-facing HTML elements onto the page.
-      #+begin_export html
+      #+BEGIN_EXPORT html
       <!DOCTYPE html>
       {% load static %}
       <html lang="en-us">
@@ -160,4 +160,4 @@ This entire project was planned and conceived in the lovely [[https://orgmode.or
             {{ symbol }}
         </body>
       </html>
-      #+end_export
+      #+END_EXPORT

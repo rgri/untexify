@@ -60,19 +60,19 @@ This entire project was planned and conceived in the lovely [[https://orgmode.or
    2. [ ] Train the model
 2. Frontend
    1) Hosting
-      To host this project I used [[https://fly.io/][fly.io]] for its excellent integration with [[https://www.djangoproject.com/][Django]], which was used to construct the frontend. Fly.io extremely simple installation instructions for a number of web-app libraries for popular languages, and it was overall very simple to use for someone not experienced in website hosting like myself.
+      To host this project I used [[https://fly.io/][fly.io]] for its excellent integration with [[https://www.djangoproject.com/][Django]], which was used to construct the frontend. Fly.io's extremely simple installation instructions for a number of web-app libraries for popular languages, and it was overall very simple to use for someone not experienced in website hosting like myself.
    2) Website structure
-      The frontend's structure was made entirely using Django, which was excellent for me as someone with lots of python experience, and little HTML or CSS experience.
+      The frontend's structure was made entirely using Django, which was excellent for me as someone with lots of Python experience, and little HTML or CSS experience.
 
-      Most of the interface between the model (which was made using another python library, Tensorflow) and the page was handled in a single [[file:frontend/untexifyweb/testapp/views.py][views.py]] file. Python acted as the glue between Django and Tensorflow, which was extremely helpful and satisfying to work with.
+      Most of the interface between the model (which was made using another Python library, Tensorflow) and the page was handled in a single [[file:frontend/untexifyweb/testapp/views.py][views.py]] file. Python acted as the glue between Django and Tensorflow, which was extremely helpful and satisfying to work with.
 
       Those parts of the website I needed to actually delve into HTML for, were done almost entirely using org-mode's helpful HTML export. I could export large swaths of org-mode documents to a nice-looking CSS "frame", while embedding HTML within the plain org text for seamless integration into the final product.
 
-   3) Exporting the code
+** Exporting the code
       #+EXPORT_FILE_NAME: /home/shortcut/git/untexify/frontend/untexifyweb/testapp/templates/testapp/home.html
       This section contains the real code I am using for some Untexify's user-facing elements. They are written as code blocks, which are themselves tangled and merged together within Org-mode's exported HTML file, and are placed automatically where Django expects them to be.
 
-      The utility of a literate configuration in this case is debatable, and it exists mostly as a proof-of-concept, and convenient since most of my other design lives within Emacs. With the use of [[https://orgmode.org/manual/CSS-support.html][custom stylesheet]] functionality, however, I can quickly alter the look of the site at anytime, with minimal effort.
+      The utility of a literate configuration in this case is debatable, and it exists mostly as a proof-of-concept, and convenience since most of my other design lives within Emacs. With the use of [[https://orgmode.org/manual/CSS-support.html][custom stylesheet]] functionality, however, I can quickly alter the look of the site at anytime, with minimal effort.
 
       This block is the javascript code for the HTML canvas responsible for accepting user input, in the form of hand-drawn approximations of the symbol they are trying to look up.
       #+begin_src javascript :exports none

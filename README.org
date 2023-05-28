@@ -75,7 +75,7 @@ This entire project was planned and conceived in the lovely [[https://orgmode.or
       The utility of a literate configuration in this case is debatable, and it exists mostly as a proof-of-concept, and convenience since most of my other design lives within Emacs. With the use of [[https://orgmode.org/manual/CSS-support.html][custom stylesheet]] functionality, however, I can quickly alter the look of the site at anytime, with minimal effort.
 
       This block is the javascript code for the HTML canvas responsible for accepting user input, in the form of hand-drawn approximations of the symbol they are trying to look up.
-      #+BEGIN_SRC javascript :exports none
+      #+BEGIN_SRC javascript :exports code
       // matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".
       const canvas = document.querySelector('.myCanvas');
       const width = canvas.width = window.innerWidth;

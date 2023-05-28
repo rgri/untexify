@@ -133,7 +133,7 @@ This entire project was planned and conceived in the lovely [[https://orgmode.or
       draw();
       #+END_SRC
       Now, we render embed the user-facing HTML elements onto the page.
-      #+BEGIN_EXPORT html
+      #+BEGIN_EXPORT html :exports code
       <!DOCTYPE html>
       {% load static %}
       <html lang="en-us">

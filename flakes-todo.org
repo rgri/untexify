@@ -1,0 +1,39 @@
+* Making a nix-shell dev environment
+** The alternatives to poetry2nix don't work
+** poetry2nix's mkPythonEnv
+*** using the default.nix implementation from github
+*** using it in a flake
+Both of these methods run into a
+#+begin_src bash
+ModuleNotFoundError: No module named 'flit_core'
+#+end_src
+error, suggesting they are maybe equivalent.
+**** Updating poetry2nix
+I can specify specific commit hashes when inputting it as a flake, but I can't figure out how to reference mkPythonEnv as an attribute- I don't know what its path is
+***** How to refer to mkPoetryEnv from the flake input
+****** Understand the outputs specification by reading about eachDefaultSystem
+****** Some other way of locating the path
+*** Is the error fixed in poetry2nix or does it require a [[https://github.com/nix-community/poetry2nix/issues/568][workaround]]?
+**** Fixed in poetry2nix
+***** Figure out how to use newest version
+****** [?] understand "overlays"
+:LOGBOOK:
+- State "[?]"        from              [2023-06-25 Sun 23:20]
+:END:
+****** [?] understand poetry2nix.overlay
+:LOGBOOK:
+- State "[?]"        from              [2023-06-25 Sun 23:20]
+:END:
+***** [?] Implement the workaround
+:LOGBOOK:
+- State "[?]"        from              [2023-06-25 Sun 23:21]
+:END:
+
+****** [?] is this the right syntax: =pkgs.python310.flit-core=
+:LOGBOOK:
+- State "[?]"        from              [2023-06-25 Sun 23:20]
+:END:
+****** [?]
+:LOGBOOK:
+- State "[?]"        from              [2023-06-25 Sun 23:21]
+:END:

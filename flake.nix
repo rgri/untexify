@@ -18,14 +18,17 @@
           buildInputs = [
             (pkgs.poetry2nix.mkPoetryEnv {
               projectDir = ./.;
-              overrides = pkgs.poetry2nix.overrides.withDefaults (self: super: {
-                # …
-                # workaround https://github.com/nix-community/poetry2nix/issues/568
-                structlog = super.structlog.overridePythonAttrs (old: {
-                  buildInputs = (old.buildInputs or [ ])
-                    ++ [ pkgs.python310.flit-core ];
+              overrides = pkgs.poetry2nix.defaultPoetryOverrides.extend
+                (self: super: {
+                  lazy-loader = super.lazy-loader.overridePythonAttrs (old: {
+                    buildInputs = (old.buildInputs or [ ])
+                      ++ [ super.flit-core ];
+                    beniget = super.beniget.overridePythonAttrs (old: {
+                      buildInputs = (old.buildInputs or [ ])
+                        ++ [ super.setuptools-scm ];
+                    });
+                  });
                 });
-              });
             })
           ];
 

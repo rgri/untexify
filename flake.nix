@@ -28,10 +28,6 @@
                     buildInputs = (old.buildInputs or [ ])
                       ++ [ super.setuptools-scm ];
                   });
-                  gast = super.gast.overridePythonAttrs (old: {
-                    nativeBuildInputs = (old.nativeBuildInputs or [ ])
-                      ++ [ super.setuptools ];
-                  });
                 });
             })
           ];

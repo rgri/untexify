@@ -1,4 +1,4 @@
-* Making a nix-shell dev environment
+* +Making a nix-shell dev environment+
 ** The alternatives to poetry2nix don't work
 ** poetry2nix's mkPythonEnv
 *** using the default.nix implementation from github
@@ -37,3 +37,9 @@ I can specify specific commit hashes when inputting it as a flake, but I can't f
 :LOGBOOK:
 - State "[?]"        from              [2023-06-25 Sun 23:21]
 :END:
+* Current state of the project
+There are several workarounds for errors presented [[https://github.com/nix-community/poetry2nix/blob/master/docs/edgecases.md][here]]. In general, for errors like:
+#+begin_src bash
+ModuleNotFoundError: No module named 'flit_core'
+#+end_src
+Fill out the =bd= snippet.

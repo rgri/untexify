@@ -43,3 +43,5 @@ There are several workarounds for errors presented [[https://github.com/nix-comm
 ModuleNotFoundError: No module named 'flit_core'
 #+end_src
 Fill out the =bd= snippet.
+
+[2023-06-29 Thu 18:32] Stopping after a very long stretch of no progress. See the commit =25f4b7e= for the current state and possible future steps. Big big issues here.

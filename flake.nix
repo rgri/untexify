@@ -2,9 +2,9 @@
   description = "Flake to manage python workspace";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     poetry2nix.url =
-      "github:nix-community/poetry2nix/4f91d45e39cf64b642c6d2725c7bd50d6fcb544b";
+      "github:nix-community/poetry2nix";
     utils.url = "github:numtide/flake-utils";
   };
 
@@ -28,6 +28,7 @@
                     buildInputs = (old.buildInputs or [ ])
                       ++ [ super.setuptools-scm ];
                   });
+
                 });
             })
           ];

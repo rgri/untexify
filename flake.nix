@@ -14,15 +14,26 @@
         # see https://github.com/nix-community/poetry2nix/tree/master#api for more functions and examples.
         inherit (poetry2nix.legacyPackages.${system}) mkPoetryApplication;
         pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
+      in {
         packages = {
-          myapp = mkPoetryApplication { projectDir = self; };
+          myapp = mkPoetryApplication {
+            projectDir = self;
+            python = pkgs.python310Full;
+            overrides = pkgs.poetry2nix.defaultPoetryOverrides.extend
+              (self: super: {
+                lazy-loader = super.lazy-loader.overridePythonAttrs (old: {
+                  buildInputs = (old.buildInputs or [ ]) ++ [ super.flit-core ];
+                });
+                beniget = super.beniget.overridePythonAttrs (old: {
+                  buildInputs = (old.buildInputs or [ ])
+                    ++ [ super.setuptools-scm ];
+                });
+              });
+          };
           default = self.packages.${system}.myapp;
         };
 
-        devShells.default = pkgs.mkShell {
-          packages = [ poetry2nix.packages.${system}.poetry ];
-        };
+        devShells.default =
+          pkgs.mkShell { packages = [ poetry2nix.packages.${system}.poetry ]; };
       });
 }

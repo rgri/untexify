@@ -75,3 +75,7 @@ werkzeug = "==2.2.3"
 whitenoise = "==6.4.0"
 wrapt = "==1.15.0"
 zipp = "==3.15.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

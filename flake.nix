@@ -3,16 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    poetry2nix.url =
-      "github:nix-community/poetry2nix";
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, poetry2nix, utils, ... }@inp:
+  outputs = { self, nixpkgs, utils, ... }@inp:
     utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        overlays = [ poetry2nix.overlay ];
+      let pkgs = import nixpkgs { inherit system; };
       in {
         devShell = pkgs.mkShell {
           buildInputs = [
@@ -20,9 +16,9 @@
               projectDir = ./.;
               overrides = pkgs.poetry2nix.defaultPoetryOverrides.extend
                 (self: super: {
-                  lazy-loader = super.lazy-loader.overridePythonAttrs (old: {
-                    buildInputs = (old.buildInputs or [ ])
-                      ++ [ super.flit-core ];
+                  gast = super.gast.overridePythonAttrs (old: {
+                    nativeBuildInputs = (old.nativeBuildInputs or [ ])
+                      ++ [ self.setuptools-scm ];
                   });
                   beniget = super.beniget.overridePythonAttrs (old: {
                     buildInputs = (old.buildInputs or [ ])

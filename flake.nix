@@ -2,7 +2,8 @@
   description = "Application packaged using poetry2nix";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url =
+    "github:NixOS/nixpkgs/dddc103fdbf1a8a72a9560aec73114cb1fbb9423";
   inputs.poetry2nix = {
     url = "github:nix-community/poetry2nix";
     inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +19,6 @@
         packages = {
           myapp = mkPoetryApplication {
             projectDir = self;
-            python = pkgs.python310Full;
             overrides = pkgs.poetry2nix.defaultPoetryOverrides.extend
               (self: super: {
                 lazy-loader = super.lazy-loader.overridePythonAttrs (old: {

@@ -2,12 +2,8 @@
   description = "Application packaged using poetry2nix";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nixpkgs.url =
-    "github:NixOS/nixpkgs/dddc103fdbf1a8a72a9560aec73114cb1fbb9423";
-  inputs.poetry2nix = {
-    url = "github:nix-community/poetry2nix";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/";
+  inputs.poetry2nix = { url = "github:nix-community/poetry2nix"; };
 
   outputs = { self, nixpkgs, flake-utils, poetry2nix }:
     flake-utils.lib.eachDefaultSystem (system:

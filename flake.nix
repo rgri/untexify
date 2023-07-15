@@ -4,6 +4,7 @@
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/";
   inputs.poetry2nix = { url = "github:nix-community/poetry2nix"; };
+  inputs.poetry2nix.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = { self, nixpkgs, flake-utils, poetry2nix }@inputs:
     flake-utils.lib.eachDefaultSystem (system:
@@ -13,6 +14,6 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in {
         devShells.default =
-          pkgs.mkShell { packages = [ poetry2nix.packages.${system}.poetry ]; };
+          pkgs.mkShell { packages = [ poetry2nix.packages.${system}.poetry pkgs.direnv]; };
       });
 }

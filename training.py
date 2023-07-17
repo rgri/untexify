@@ -13,7 +13,7 @@ from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 
-data_dir = pathlib.Path("/home/shortcut/git/untexify-data/images")
+data_dir = pathlib.Path("/Users/shortcut/git/untexify-data/images")
 
 batch_size = 100
 img_height = 72

@@ -6,9 +6,9 @@ authors = ["Your Name <you@example.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.9.12"
+python = "3.9.*"
 # probably replace this with just 'tensorflow' on windows
-tensorflow = "2.12.*"
+tensorflow-macos = "2.12.*"
 numpy = "*"
 matplotlib="*"
 pillow="*"

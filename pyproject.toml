@@ -6,15 +6,9 @@ authors = ["Your Name <you@example.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = "3.9.12"
 # probably replace this with just 'tensorflow' on windows
-tensorflow-macos = "^2.13.0,<3.0.0"
-numpy = "*"
-matplotlib="*"
-pillow="*"
-scipy="*"
-opencv-python="*"
-albumentations="*"
+tensorflow = "*"
 
 
 [build-system]

@@ -8,6 +8,7 @@ import pathlib
 import albumentations as A
 import cv2
 import scipy
+from multiprocessing import Pool
 
 from tensorflow import keras
 from keras import layers
@@ -16,14 +17,19 @@ from keras.models import Sequential
 # .Path()'s need an absolute path
 data_dir = pathlib.Path("/Users/shortcut/git/untexify-data/images")
 
-# TODO: Explain the reasoning for this choice of transforms.
+# DONE: Explain the reasoning for this choice of transforms.
+# The transforms compenents were chosen as follows:
+# Sharpen() will preliminarily de-noise the image.
+# ElasticTransform() "squiggles" the image to simulate handwriting.
+# Next, we Sharpen() the image twice to severely denoise.
+# Equalize() will remove color differences to match the input method on the frontend
 transform = A.Compose(
     [
-        A.transforms.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
+        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
         A.ElasticTransform(alpha=20, sigma=10000, alpha_affine=10, p=1),
-        A.transforms.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
-        A.transforms.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
-        A.transforms.Equalize(p=1.0),
+        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
+        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
+        A.Equalize(p=1.0),
     ]
 )
 
@@ -37,17 +43,40 @@ transform = A.Compose(
 # plt.imshow(transformed)
 # plt.show()
 
-# Generate the dataset
-for i in range(53):
-    imagePath = "/Users/shortcut/git/untexify-data/original_images/" + str(i) + ".png"
+
+def helper(index):
+    i, j = index
+    print(i)
+    print()
+    imagePath = "/Users/shortcut/git/untexify-data/original_images/" + i
     image = cv2.imread(imagePath)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    for j in range(200):
-        # sigma is "squiggliness", alpha is movement?, alpha_affine is how much it moves across the page
-        # TODO: Clean up this comment.
-        transformed = transform(image=image)["image"]
-        transformed = np.array(transformed)
-        outName = (
-            "/Users/shortcut/git/untexify-data/images/" + str(i) + "/" + str(j) + ".png"
-        )
-        cv2.imwrite(outName, transformed)
+    if j % 50 == 0:
+        print("This is j")
+        print()
+        print(j)
+        print()
+    # Sigma is "squiggliness", and Alpha is movement? alpha_affine is how much it moves across the page.
+    # DONE: Clean up this comment.
+    transformed = transform(image=image)["image"]
+    transformed = np.array(transformed)
+    outName = (
+        "/Users/shortcut/git/untexify-data/images/" + i[:-4] + "/" + str(j) + ".png"
+    )
+
+    cv2.imwrite(outName, transformed)
+
+
+# Generate the class directories
+for i in original_images:
+    try:
+        os.mkdir("/Users/shortcut/git/untexify-data/images/" + i[:-4])
+    except:
+        pass
+
+# Generate the dataset
+with Pool(10) as p:
+    p.map(
+        helper, [(x, y) for x in original_images for y in range(20)]
+    )  # generate the cartesian product [0 .. 52] X [0 .. 199]
+======= end

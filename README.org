@@ -1,90 +1,40 @@
 #+title: Untexify - a bad clone of [[https://detexify.kirelabs.org/classify.html][Detexify]]
+#+STARTUP:     latexpreview
+#+STARTUP:     nologdone
+#+PROPERTY: header-args:html :session first :exports both :results output :tangle codeblocks.py :comments link :noweb-ref 0 :noweb yes
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+# DONE: Make this past-tense
 * What this is
-This is a placeholder repo for a future Tensorflow project I intend to complete by [2023-03-27 Mon].
-* Road-map
-** TODO Create the dataset
-*** DONE Pull a large list of symbols from [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
+Untexify is a handwriting-to- $\LaTeX$ dictionary. $\LaTeX$ is the most popular markup language for technical documents in mathematics, and is widely used throughout computer science and industry.
 
-I simply copied a table's symbols and formatted them into a file such that each piece of LaTeX was on its own line.
-*** DONE Convert them into .png files
+However, its mnemonic conventions for symbols are old and debatably antiquated. Many beginning researchers and students of the sciences find difficulty remembering the $\LaTeX$ name for a certain symbol. Untexify is an interactive canvas which will return the closest $\LaTeX$ code for any symbol drawn on it.
 
-I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reproduction, I placed the file containing my equations called ~equations.txt~ the root of the git repository, then ran from the root:
-#+begin_src bash
-    cd src/
-    . set.sh $absolute_path_to_equations_txt
-    cd ..
-    cd equations.txt_aux
-    python generate_latex.py
-#+end_src
-I numbered the resulting files using Dired.
-*** DONE Sort them into classes based on their latex code
+This is accomplished using an OCR machine learning model written in Python using TensorFlow, which is then ran in a webapp created with [[https://www.djangoproject.com/][Django]] and hosted online with the help of [[https://fly.io/][fly.io]].
 
-I created my [[file:./images/][images/]] folder, and used this bit of bash magic to sort them into folders sharing their same names:
-#+begin_src bash
-    for i in $(seq 0 $IMAGE_COUNT); do mkdir $i; mv $i.png $i/; done
-#+end_src
-Which resulted in:
-#+begin_src bash :results
-    ls ./images
-#+end_src
+The training dataset was not hand-drawn, like in the case of many other MNIST-like models. Rather, it was programmatically generated using an image-transformation pipeline created with the [[https://albumentations.ai/][Albumentations]] library. This way, I didn't have to find or write myself thousands of hand-drawn $\LaTeX$ symbols.
 
-#+results:
-|  0 |
-|  1 |
-| 10 |
-| 11 |
-| 12 |
-| 13 |
-| 14 |
-| 15 |
-| 16 |
-| 17 |
-| 18 |
-| 19 |
-|  2 |
-| 20 |
-| 21 |
-| 22 |
-| 23 |
-| 24 |
-| 25 |
-| 26 |
-| 27 |
-| 28 |
-| 29 |
-|  3 |
-| 30 |
-| 31 |
-| 32 |
-| 33 |
-| 34 |
-| 35 |
-| 36 |
-| 37 |
-| 38 |
-| 39 |
-|  4 |
-| 40 |
-| 41 |
-| 42 |
-| 43 |
-| 44 |
-| 45 |
-| 46 |
-| 47 |
-| 48 |
-| 49 |
-|  5 |
-| 50 |
-| 51 |
-| 52 |
-|  6 |
-|  7 |
-|  8 |
-|  9 |
-*** TODO Simulate handwriting by programmatically distorting the .pngs
+This entire project was planned and conceived in the lovely [[https://orgmode.org/][Org-mode]], as Emacs is my primary development environment. The website was itself written as a series of HTML and Javascript codeblocks which were tangled together using Org-mode's exporting functionality.
 
-To do this I need a series of "transforms" which will piecewise randomly affect an aspect of a given image. This prevents overfitting, and in the first phase makes the model functional at all. Here are the aspects of the image I chose to transform:
+* Road Map
+1. Backend
+   1. Create the dataset
+      1) Pull a large list of symbols from the [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
+         I simply copied a table's symbols and formatted them into a file such that each piece of $\LaTeX$ was on its own line.
+      2) Convert the images into .png files
+         I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reference, I placed the file containing my equations called ~equations.txt~ the root of the git repository, then ran from the root:
+         #+begin_src bash
+             cd src/
+             . set.sh $absolute_path_to_equations_txt
+             cd ..
+             cd equations.txt_aux
+             python generate_latex.py
+         #+end_src
+         I numbered the resulting files using Dired.
+      3) Sort the images into classes based on their $\LaTeX$ code
+         I created my images folder, and used this bit of bash magic to sort them into subfolders sharing their same names:
+         #+begin_src bash
+             for i in $(seq 0 $IMAGE_COUNT); do mkdir $i; mv $i.png $i/; done
+         #+end_src
 
 |----------------------------------+------------------------|
 | Writing aspect                   | Transform name         |
@@ -93,15 +43,12 @@ To do this I need a series of "transforms" which will piecewise randomly affect 
 | Orientation/rotation             |                        |
 | Crossing                         |                        |
 |----------------------------------+------------------------|
-<<<<<<< Updated upstream
-** TODO Train the model
-=======
 ***** TODO Translation and scale
 Although a textbook cited at the keras docs mentions that convolution layers /should/ be translation invariant, a cursory test of my model indicates they are definitely not. So, I need to alter the transformation stack accordingly. The model is also not resistant to the scale of the input, so I need to fix that as well.
 ***** TODO Stroke
 The model is not resistant to different strokes. Depending on the way I implement the frontend, there may be no reason to train the model to recognize this.
 ***** TODO Choose a list of symbols
-Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small latex symbols in the model's format exists[fn:1], and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
+Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small latex symbols in the model's format exists, and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
 
 This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to lookup the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
 
@@ -115,7 +62,7 @@ fly.io perhaps...
 *** Notes on using Django
 - urlpatterns defined in an /app's/ urls.py are basically mappings from patterns in the url to methods within the views.py file for that app
 
-- views.py is a collection of methods which are basically sub-pages of a site[fn:2]
+- views.py is a collection of methods which are basically sub-pages of a site
 
   - methods in views.py have to return "HttpResponse" calls, but besides that can contain basically any python code
 
@@ -124,7 +71,7 @@ fly.io perhaps...
     '<int:question_id>/'
     #+end_src
 
-- Templates an important part of views- in a yourappname/templates/yourappname/ dir, and are basically html files which can take in inputs etc.[fn:3]
+- Templates an important part of views- in a yourappname/templates/yourappname/ dir, and are basically html files which can take in inputs etc.
 
   - You can assign variables in a given template to python objects using "contexts"
 
@@ -299,4 +246,131 @@ Getting a "Template does not exist" exception/error? [[https://stackoverflow.com
 4. create views, forms, etc
 5. [[https://docs.djangoproject.com/en/4.1/howto/static-files/][static files]]
    - when you *deploy*, you must follow that link's instructions.
->>>>>>> Stashed changes
+     1) Simulate handwriting
+        To do this I need a series of "transforms" which will piecewise randomly affect an aspect of a given image. This prevents overfitting, and in the first phase makes the model functional at all. Here are the aspects of the image I chose to transform:
+
+        |----------------------------------+------------------------|
+        | Writing aspect                   | Transform name         |
+        |----------------------------------+------------------------|
+        | "wiggliness" or poor handwriting | ~A.ElasticTransform()~ |
+        | Sharpening                       | ~A.Sharpen()~          |
+        | Uniform color                    | ~A.Equalize()~         |
+        | Orientation/rotation             |                        |
+        | Scale                            |                        |
+        |----------------------------------+------------------------|
+        - Translation and scale
+          Although a textbook cited at the keras docs mentions that convolution layers /should/ be translation invariant, a cursory test of my model indicates they are definitely not. So, I need to alter the transformation stack accordingly. The model is also not resistant to the scale of the input, so I need to fix that as well.
+        - Stroke
+          The model is not resistant to different strokes. Depending on the way I implement the frontend, there may be no reason to train the model to recognize this.
+        - Choose a list of symbols
+          Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of $\not$'s (\not's). Because no large public facing database of small $\LaTeX$ symbols in the model's format exists, and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
+
+          This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to look up the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
+
+   - [ ] Train the model
+6. Frontend
+   1) Hosting
+      To host this project I used [[https://fly.io/][fly.io]] for its excellent integration with [[https://www.djangoproject.com/][Django]], which was used to construct the frontend. Fly.io's extremely simple installation instructions for a number of web-app libraries for popular languages, and it was overall very simple to use for someone not experienced in website hosting like myself.
+   2) Website structure
+      The frontend's structure was made entirely using Django, which was excellent for me as someone with lots of Python experience, and little HTML or CSS experience.
+
+      Most of the interface between the model (which was made using another Python library, Tensorflow) and the page was handled in a single [[file:frontend/untexifyweb/testapp/views.py][views.py]] file. Python acted as the glue between Django and Tensorflow, which was extremely helpful and satisfying to work with.
+
+      Those parts of the website I needed to actually delve into HTML for, were done almost entirely using org-mode's helpful HTML export. I could export large swaths of org-mode documents to a nice-looking CSS "frame", while embedding HTML within the plain org text for seamless integration into the final product.
+
+** Exporting the code :ATTACH:
+:PROPERTIES:
+:EXPORT_FILE_NAME: ./test.html
+:ID:       e22dd64e-ecbb-4798-96db-e210c3a84074
+:END:
+      This section contains the real code I am using for some Untexify's user-facing elements. They are written as code blocks, which are themselves tangled and merged together within Org-mode's exported HTML file, and are placed automatically where Django expects them to be.
+
+      The utility of a literate configuration in this case is debatable, and it exists mostly as a proof-of-concept, and convenience since most of my other design lives within Emacs. With the use of [[https://orgmode.org/manual/CSS-support.html][custom stylesheet]] functionality, however, I can quickly alter the look of the site at anytime, with minimal effort.
+
+      This block is the javascript code for the HTML canvas responsible for accepting user input, in the form of hand-drawn approximations of the symbol they are trying to look up.
+      #+BEGIN_SRC javascript :exports code
+      // matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".
+      const canvas = document.querySelector('.myCanvas');
+      const width = canvas.width = window.innerWidth;
+      const height = canvas.height = window.innerHeight - 85;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = 'rgb(0,0,0)';
+      ctx.fillRect(0, 0, width, height);
+
+      const colorPicker = document.querySelector('input[type="color"]');
+      const sizePicker = 4;
+      const output = document.querySelector('.output');
+      const clearBtn = document.querySelector('button');
+
+      // covert degrees to radians
+      function degToRad(degrees) {
+        return degrees * Math.PI / 180;
+      };
+
+      // update sizepicker output value
+
+      sizePicker.addEventListener('input', () => output.textContent = sizePicker.value);
+
+      // store mouse pointer coordinates, and whether the button is pressed
+      let curX;
+      let curY;
+      let pressed = false;
+
+      // update mouse pointer coordinates
+      document.addEventListener('mousemove', e => {
+        curX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+        curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+      });
+
+      canvas.addEventListener('mousedown', () => pressed = true);
+
+      canvas.addEventListener('mouseup', () => pressed = false);
+
+      clearBtn.addEventListener('click', () => {
+        ctx.fillStyle = 'rgb(0,0,0)';
+        ctx.fillRect(0, 0, width, height);
+      });
+
+      function draw() {
+        if (pressed) {
+          ctx.fillStyle = colorPicker.value;
+          ctx.beginPath();
+          ctx.arc(curX, curY - 85, sizePicker.value, degToRad(0), degToRad(360), false);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+      #+END_SRC
+      Now, we render embed the user-facing HTML elements onto the page.
+      #+begin_src html :exports code
+      <!DOCTYPE html>
+      {% load static %}
+      <html lang="en-us">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=width, initial-scale=5.0">
+          <title>Canvas</title>
+          <script src="{% static 'testapp/script.js' %}" defer></script>
+        </head>
+        <body>
+          <canvas class="myCanvas" id="canvas" style="border: 3px solid black;">
+            <p>Add suitable fallback here.</p>
+          </canvas>
+          <div class="toolbar">
+              <form enctype="multipart/form-data" action="" method="post">
+                  {% csrf_token %}
+                  {{ form }}
+                  <input type="submit" value="Submit">
+              </form>
+            <button class="clearButton">Clear canvas</button>
+          </div>
+          <canvas class="background">
+            </canvas>
+            {{ symbol }}
+        </body>
+      </html>
+      #+end_src

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "untexifyweb"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.9.12"
+# probably replace this with just 'tensorflow' on windows
+tensorflow = "2.12.*"
+numpy = "*"
+matplotlib="*"
+pillow="*"
+scipy="*"
+opencv-python="*"
+albumentations="*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

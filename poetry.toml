@@ -1,0 +1,3 @@
+[virtualenvs]
+create-env = true
+in-project = true

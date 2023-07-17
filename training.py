@@ -1,4 +1,3 @@
-import dataset as d
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -14,7 +13,7 @@ from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 
-data_dir = pathlib.Path("/home/shortcut/git/untexify/images")
+data_dir = pathlib.Path("/home/shortcut/git/untexify-data/images")
 
 batch_size = 100
 img_height = 72
@@ -22,51 +21,42 @@ img_width = 72
 train_ds = tf.keras.utils.image_dataset_from_directory(
     data_dir,
     validation_split=0.2,
+    color_mode="grayscale",
     subset="training",
     seed=123,
     image_size=(img_height, img_width),
     batch_size=batch_size,
 )
-tf.keras.utils.load_img
 val_ds = tf.keras.utils.image_dataset_from_directory(
     data_dir,
     validation_split=0.2,
     subset="validation",
+    color_mode="grayscale",
     seed=123,
     image_size=(img_height, img_width),
     batch_size=batch_size,
 )
-class_names = range(0, 53)
-# TODO: Clean up these random comments.
-# Display first nine images in the data_set.
-# plt.figure(figsize=(10, 10))
-# for images, labels in data_set.take(1):
-#     for i in range(9):
-#         ax = plt.subplot(3, 3, i + 1)
-#         plt.imshow(images[i].numpy().astype("uint8"))
-#         plt.title(class_names[labels[i]])
-#         plt.axis("off")
-# plt.show()
-num_classes = len(class_names)
+
+num_classes = 53
 
 model = tf.keras.Sequential(
     [
-        tf.keras.layers.Rescaling(1.0 / 255, input_shape=(img_height, img_width, 3)),
-        tf.keras.layers.Conv2D(16, 3, padding="same", activation="relu"),
+        tf.keras.layers.Rescaling(
+            scale=1.0 / 255, input_shape=(img_height, img_width, 1)
+        ),
+        tf.keras.layers.Conv2D(64, 3, padding="same", activation="relu"),
         tf.keras.layers.MaxPooling2D(),
-        tf.keras.layers.Conv2D(32, 3, padding="same", activation="relu"),
+        tf.keras.layers.Conv2D(64, 3, padding="same", activation="relu"),
         tf.keras.layers.MaxPooling2D(),
         tf.keras.layers.Conv2D(64, 3, padding="same", activation="relu"),
         tf.keras.layers.MaxPooling2D(),
         tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(128, activation="relu"),
-        tf.keras.layers.Dense(num_classes),
+        tf.keras.layers.Dense(53),
     ]
 )
 
-# Compile and display the model. On my initial run, I got 0 validation
-# accuracy, I suspect because there was only one example per class.
-# TODO: Comment cleanup.
+# Compile and display the model.
+# DONE: Comment cleanup.
 model.compile(
     optimizer="adam",
     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -74,9 +64,8 @@ model.compile(
 )
 
 # This is a magic number.
-epochs = 30
-# TODO: Comment cleanup.
-# history = model.fit(trains_ds)
+epochs = 10
+# DONE: Comment cleanup.
 history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
 acc = history.history["accuracy"]
 val_acc = history.history["val_accuracy"]
@@ -99,3 +88,22 @@ plt.plot(epochs_range, val_loss, label="Validation Loss")
 plt.legend(loc="upper right")
 plt.title("Training and Validation Loss")
 plt.show()
+
+# Run the model on a hand-drawn example
+
+
+image = tf.keras.utils.load_img("myinput.png", color_mode="grayscale")
+image_array = tf.keras.utils.img_to_array(image)
+img_array = tf.expand_dims(image_array, 0)
+train_ds.class_names[np.argmax(tf.nn.softmax(model(img_array)))]
+# # For terminal usage; runs the model on the first 200 images in a pre-defined class.
+#
+# for i in range(200):
+#     image = tf.keras.utils.load_img(
+#         "/home/shortcut/git/untexify-data/images/10/" + str(i) + ".png",
+#         color_mode="grayscale",
+#     )
+#
+#     image_array = tf.keras.utils.img_to_array(image)
+#     img_array = tf.expand_dims(image_array, 0)
+#     class_names[np.argmax(tf.nn.softmax(model(img_array)))]

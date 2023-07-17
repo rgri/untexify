@@ -13,7 +13,8 @@
         inherit (poetry2nix.legacyPackages.${system}) mkPoetryApplication;
         pkgs = nixpkgs.legacyPackages.${system};
       in {
-        devShells.default =
-          pkgs.mkShell { packages = [ poetry2nix.packages.${system}.poetry ]; };
+        devShells.default = pkgs.mkShell {
+          packages = [ poetry2nix.packages.${system}.poetry pkgs.pyenv ];
+        };
       });
 }

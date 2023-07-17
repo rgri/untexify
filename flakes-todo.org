@@ -1,43 +1,119 @@
-* +Making a nix-shell dev environment+
-** The alternatives to poetry2nix don't work
-** poetry2nix's mkPythonEnv
-*** using the default.nix implementation from github
-*** using it in a flake
+* How to actually use this project
+:PROPERTIES:
+:ID:       822b312b-dedb-437f-880b-fdec9bf9f449
+:END:
+1. If envrc is fucked (i.e. "No poetry executable found" when doing =M-x poetry s=), you have to reload direnv in this project.
+
+   You can accomplish this through some black-magic combination of:
+
+   - =envrc-allow=
+   - =envrc-reload=
+   - =cd= ing out of the directory in vterm and then back in again
+
+2. Run =pyvenv-activate= and point it to the .venv directory here
+
+   This is to make =run-python= look for the right executable
+
+3. Use =run-python= to open the interpreter
+* Insane ramblings
+:PROPERTIES:
+:ID:       c91ac22f-ede3-4ab0-88e2-ce723f8cde04
+:END:
+This tree contains instructions for using weird install methods instead of just using poetry.
+** +Making a nix-shell dev environment+
+:PROPERTIES:
+:ID:       1cb3fd6d-1bb2-4881-98f4-d654eb4494c2
+:END:
+*** The alternatives to poetry2nix don't work
+:PROPERTIES:
+:ID:       f3c76d29-6736-4217-af23-7f87bb4dd8a9
+:END:
+*** poetry2nix's mkPythonEnv
+:PROPERTIES:
+:ID:       c31bb74a-fb5a-483c-ac9a-49f39e760340
+:END:
+**** using the default.nix implementation from github
+:PROPERTIES:
+:ID:       8cb5d416-4d30-4644-8109-cb0d9e36e5e1
+:END:
+**** using it in a flake
+:PROPERTIES:
+:ID:       b7fbc3f1-1538-480d-9e83-027dd76e2ec1
+:END:
 Both of these methods run into a
 #+begin_src bash
 ModuleNotFoundError: No module named 'flit_core'
 #+end_src
 error, suggesting they are maybe equivalent.
-**** Updating poetry2nix
+***** Updating poetry2nix
+:PROPERTIES:
+:ID:       db8fd880-aa99-4dc7-8971-0b7522b33d00
+:END:
 I can specify specific commit hashes when inputting it as a flake, but I can't figure out how to reference mkPythonEnv as an attribute- I don't know what its path is
-***** How to refer to mkPoetryEnv from the flake input
-****** Understand the outputs specification by reading about eachDefaultSystem
-****** Some other way of locating the path
-*** Is the error fixed in poetry2nix or does it require a [[https://github.com/nix-community/poetry2nix/issues/568][workaround]]?
-**** Fixed in poetry2nix
-***** Figure out how to use newest version
-****** [?] understand "overlays"
+****** How to refer to mkPoetryEnv from the flake input
+:PROPERTIES:
+:ID:       b12db078-e1bb-4110-adb9-013084ebaf2d
+:END:
+******* Understand the outputs specification by reading about eachDefaultSystem
+:PROPERTIES:
+:ID:       bf5d14d4-0573-4f4e-84db-48d2514a0f4d
+:END:
+******* Some other way of locating the path
+:PROPERTIES:
+:ID:       cd1e761b-a3f1-403f-86b3-96b05da4efc0
+:END:
+**** Is the error fixed in poetry2nix or does it require a [[https://github.com/nix-community/poetry2nix/issues/568][workaround]]?
+:PROPERTIES:
+:ID:       9558a409-011a-4b50-9ef0-c120168b9433
+:END:
+***** Fixed in poetry2nix
+:PROPERTIES:
+:ID:       33dbdbb5-ac03-4fab-9e52-a3a734ac304f
+:END:
+****** Figure out how to use newest version
+:PROPERTIES:
+:ID:       a6b1685f-f727-4264-aee3-e7a4af42bc87
+:END:
+******* [?] understand "overlays"
+:PROPERTIES:
+:ID:       79a71528-e6e1-4d36-8143-1c8515772a1f
+:END:
 :LOGBOOK:
 - State "[?]"        from              [2023-06-25 Sun 23:20]
 :END:
-****** [?] understand poetry2nix.overlay
+******* [?] understand poetry2nix.overlay
+:PROPERTIES:
+:ID:       130c4015-8281-4af3-98a1-1f4afab35019
+:END:
 :LOGBOOK:
 - State "[?]"        from              [2023-06-25 Sun 23:20]
 :END:
-***** [?] Implement the workaround
+****** [?] Implement the workaround
+:PROPERTIES:
+:ID:       65faac45-1fd2-412d-9932-6df24d4e4b0a
+:END:
 :LOGBOOK:
 - State "[?]"        from              [2023-06-25 Sun 23:21]
 :END:
 
-****** [?] is this the right syntax: =pkgs.python310.flit-core=
+******* [?] is this the right syntax: =pkgs.python310.flit-core=
+:PROPERTIES:
+:ID:       5c845643-e0d7-45b4-bbab-5a8b69b1514c
+:END:
 :LOGBOOK:
 - State "[?]"        from              [2023-06-25 Sun 23:20]
 :END:
-****** [?]
+******* [?]
+:PROPERTIES:
+:ID:       4cc797b3-dddb-41f3-859a-98b17b90738f
+:END:
 :LOGBOOK:
 - State "[?]"        from              [2023-06-25 Sun 23:21]
 :END:
-* Current state of the project
+** Current state of the project
+:PROPERTIES:
+:ID:       0847eced-7d6b-48af-bbeb-4871daf41289
+:END:
 There are several workarounds for errors presented [[https://github.com/nix-community/poetry2nix/blob/master/docs/edgecases.md][here]]. In general, for errors like:
 #+begin_src bash
 ModuleNotFoundError: No module named 'flit_core'
@@ -45,7 +121,10 @@ ModuleNotFoundError: No module named 'flit_core'
 Fill out the =bd= snippet.
 
 [2023-06-29 Thu 18:32] Stopping after a very long stretch of no progress. See the commit =25f4b7e= for the current state and possible future steps. Big big issues here.
-* Tensorflow fail log
+** Tensorflow fail log
+:PROPERTIES:
+:ID:       4a6454a1-3c52-48a2-af6f-2c30afd8fbd6
+:END:
 :log:
 /nix/store/nhzvgfpfw40k8627yv4gp46jynb2akfh-tensorflow-2.11.0.drv
 @nix { "action": "setPhase", "phase": "unpackPhase" }

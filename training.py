@@ -100,7 +100,7 @@ train_ds.class_names[np.argmax(tf.nn.softmax(model(img_array)))]
 #
 # for i in range(200):
 #     image = tf.keras.utils.load_img(
-#         "/home/shortcut/git/untexify-data/images/10/" + str(i) + ".png",
+#         "/Users/shortcut/git/untexify-data/images/10/" + str(i) + ".png",
 #         color_mode="grayscale",
 #     )
 #

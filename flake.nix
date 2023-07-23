@@ -14,7 +14,12 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in {
         devShells.default = pkgs.mkShell {
-          packages = [ poetry2nix.packages.${system}.poetry pkgs.pyenv ];
+          packages = [
+            poetry2nix.packages.${system}.poetry
+            pkgs.pyenv
+            pkgs.python39Packages.python
+            pkgs.nodePackages.npm
+          ];
         };
       });
 }

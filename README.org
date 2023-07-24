@@ -5,6 +5,9 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 # DONE: Make this past-tense
 * What this is
+:PROPERTIES:
+:ID:       1223610a-f1de-4bef-b2c7-63c388b82739
+:END:
 Untexify is a handwriting-to- $\LaTeX$ dictionary. $\LaTeX$ is the most popular markup language for technical documents in mathematics, and is widely used throughout computer science and industry.
 
 However, its mnemonic conventions for symbols are old and debatably antiquated. Many beginning researchers and students of the sciences find difficulty remembering the $\LaTeX$ name for a certain symbol. Untexify is an interactive canvas which will return the closest $\LaTeX$ code for any symbol drawn on it.
@@ -16,6 +19,9 @@ The training dataset was not hand-drawn, like in the case of many other MNIST-li
 This entire project was planned and conceived in the lovely [[https://orgmode.org/][Org-mode]], as Emacs is my primary development environment. The website was itself written as a series of HTML and Javascript codeblocks which were tangled together using Org-mode's exporting functionality.
 
 * Road Map
+:PROPERTIES:
+:ID:       416c080b-4f18-4c40-b3ce-836a6542b37e
+:END:
 1. Backend
    1. Create the dataset
       1) Pull a large list of symbols from the [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
@@ -164,3 +170,25 @@ This entire project was planned and conceived in the lovely [[https://orgmode.or
         </body>
       </html>
       #+end_src
+* The Webdev Experience :devlog:
+:PROPERTIES:
+:ID:       b487fcad-3e76-4c7b-b5c0-a1abb8a8ca05
+:END:
+- NodeJS is a javascript runtime- like a python interpreter, but for JS
+  - It lets you run ES6 javascript (the newest version of javascript), which allows you to use statements like =export= to make functions/variables/classes etc available to =import= from other javascript files.
+
+    In essence, it is a way to complete javascript as a module system, like python
+
+  - Most browsers do not support this type of ES6 javascript by default- you need to run a nodejs sever for that to work
+
+    This is opposed to django, which is also a server. However, it is not the same as nodejs, and so you need special considerations to use ES6 with it.
+
+- Bundlers are tools which, in various ways, allow one to use the new javascript syntax with older browsers
+
+  Here is a list of examples of bundlers I have seen mentioned:
+
+  + [[https://rollupjs.org/tutorial/#creating-your-first-bundle][Rollup]]
+
+  + Vite
+
+  + Webpack

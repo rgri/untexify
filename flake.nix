@@ -19,6 +19,7 @@
             pkgs.pyenv
             pkgs.python39Packages.python
             pkgs.nodePackages.npm
+            pkgs.nodePackages.rollup
           ];
         };
       });

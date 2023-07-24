@@ -5,6 +5,9 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 # DONE: Make this past-tense
 * What this is
+:PROPERTIES:
+:ID:       1223610a-f1de-4bef-b2c7-63c388b82739
+:END:
 Untexify is a handwriting-to- $\LaTeX$ dictionary. $\LaTeX$ is the most popular markup language for technical documents in mathematics, and is widely used throughout computer science and industry.
 
 However, its mnemonic conventions for symbols are old and debatably antiquated. Many beginning researchers and students of the sciences find difficulty remembering the $\LaTeX$ name for a certain symbol. Untexify is an interactive canvas which will return the closest $\LaTeX$ code for any symbol drawn on it.
@@ -16,6 +19,9 @@ The training dataset was not hand-drawn, like in the case of many other MNIST-li
 This entire project was planned and conceived in the lovely [[https://orgmode.org/][Org-mode]], as Emacs is my primary development environment. The website was itself written as a series of HTML and Javascript codeblocks which were tangled together using Org-mode's exporting functionality.
 
 * Road Map
+:PROPERTIES:
+:ID:       416c080b-4f18-4c40-b3ce-836a6542b37e
+:END:
 1. Backend
    1. Create the dataset
       1) Pull a large list of symbols from the [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
@@ -44,22 +50,52 @@ This entire project was planned and conceived in the lovely [[https://orgmode.or
 | Crossing                         |                        |
 |----------------------------------+------------------------|
 ***** TODO Translation and scale
+:PROPERTIES:
+:ID:       9329ce83-9d36-442f-aa1b-0f878627bdb4
+:END:
 Although a textbook cited at the keras docs mentions that convolution layers /should/ be translation invariant, a cursory test of my model indicates they are definitely not. So, I need to alter the transformation stack accordingly. The model is also not resistant to the scale of the input, so I need to fix that as well.
 ***** TODO Stroke
+:PROPERTIES:
+:ID:       0f2a0cc9-68e0-42a9-802e-38cacc697079
+:END:
 The model is not resistant to different strokes. Depending on the way I implement the frontend, there may be no reason to train the model to recognize this.
 ***** TODO Choose a list of symbols
+:PROPERTIES:
+:ID:       8072149a-3aa0-40c8-a285-b706b3683d82
+:END:
 Initially, I chose a sample of 50 symbols picked mostly arbitrarily. The initial sample includes multiple sets of symbols which would be similarly drawn ($\prec$ and $<$, for example), and also made liberal use of "$\not$"'s (\not's). Because no large public facing database of small latex symbols in the model's format exists, and the transform stack is prohibitively computationally expensive, I had to decide what my relatively small data set will contain. I decided on a set of symbols composed mostly of some of the most popular mathematical symbols.
 
 This might be a bit paradoxical, because those symbols which are most popular surely are the most remembered. This may be true, but it is also true that there are probably more beginning researchers and students in need of a reference for basic symbols than there are people who need to lookup the more esoteric symbols. Since [[https://detexify.kirelabs.org/classify.html][detexify]] exists and has a more comprehensive database, I choose for my tool to be more of a quick reference.
 
 *** TODO Train the model
+:PROPERTIES:
+:ID:       abefb6da-43a5-4031-9747-c35c7e50b7da
+:END:
 ** Frontend
+:PROPERTIES:
+:ID:       961df437-748a-46a6-a0d1-1ed053401c03
+:END:
 *** Drawing app
+:PROPERTIES:
+:ID:       f400d883-4a31-46e4-9432-ef5308bcccf4
+:END:
 *** Calling the model
+:PROPERTIES:
+:ID:       6bca650b-a082-4074-9e60-1c38613681e5
+:END:
 *** Formatting
+:PROPERTIES:
+:ID:       789efd6c-5f48-4b15-ae8b-c68910a84842
+:END:
 *** Hosting the site
+:PROPERTIES:
+:ID:       7d9e6fb7-1ce2-46ac-87e2-ae713d5b9f82
+:END:
 fly.io perhaps...
 *** Notes on using Django
+:PROPERTIES:
+:ID:       c318ba1d-85f6-4e28-aef6-f329436f7fa1
+:END:
 - urlpatterns defined in an /app's/ urls.py are basically mappings from patterns in the url to methods within the views.py file for that app
 
 - views.py is a collection of methods which are basically sub-pages of a site
@@ -78,9 +114,13 @@ fly.io perhaps...
 * HTML Page
 :PROPERTIES:
 :header-args:html: :exports body
+:ID:       5102d1e2-df49-480c-8512-fca3fb1d5d20
 :END:
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 ** This website was made using org-mode. Crazy, right?
+:PROPERTIES:
+:ID:       983c827d-8e48-4d10-bd8b-fae432791365
+:END:
 This page was created and written entirely within org-mode- don't believe me? Here's an excerpt from the html of the next heading (when exported on its own):
 
 #+begin_src html
@@ -110,6 +150,9 @@ This page was created and written entirely within org-mode- don't believe me? He
 **
 
 ** Some pictures and the code for my model
+:PROPERTIES:
+:ID:       fb7060fd-399d-4e64-be90-8a00d1630dfe
+:END:
 In this heading, we have some pictures which get embedded automatically. Here is a photo of a drawing I use to test the hand-drawn recognition of my model:
 
 [[file:myinput.png]]
@@ -130,16 +173,25 @@ Also, here is a video:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bwiLYb5Lv2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 #+end_export
 ** Finally, I'll end with a famous Grothendieck quote
+:PROPERTIES:
+:ID:       171127b3-048c-4eed-86d1-8f2e6b28b842
+:END:
 #+begin_quote
 A different image came to me a few weeks ago. The unknown thing to be known appeared to me as some stretch of earth or hard marl, resisting penetration... the sea advances insensibly in silence, nothing seems to happen, nothing moves, the water is so far off you hardly hear it... yet finally it surrounds the resistant substance.
                                         - Alexander Grothendieck[fn:4]
 #+end_quote
 ** Footnotes
+:PROPERTIES:
+:ID:       2b1f1933-e425-4b96-9538-6e442e19779d
+:END:
 [fn:5] https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
 
 
 [fn:4] https://www.azquotes.com/quote/690590
-* Testing exporting with blocks
+* Testing exporting with blocks :devlog:
+:PROPERTIES:
+:ID:       52e68ed7-8f89-4484-90e5-580863d0b9b2
+:END:
 #+EXPORT_FILE_NAME: /home/shortcut/git/untexify/frontend/untexifyweb/testapp/templates/testapp/home.html
 This is the test of an html export with html code-blocks inbuilt.
 #+begin_src javascript :exports none 
@@ -231,15 +283,21 @@ This is a thing
   </body>
 </html>
 #+end_export
-* test
+* test :devlog:
+:PROPERTIES:
+:ID:       62ad5016-a29b-4e80-a094-036a7233a21d
+:END:
 hello
-* Notes on Django setup :ATTACH:
+* Notes on Django setup :ATTACH:devlog:
 :PROPERTIES:
 :ID:       9f218c40-f8cb-4786-ad33-e4cc0033717f
 :END:
 Getting a "Template does not exist" exception/error? [[https://stackoverflow.com/a/73620984][This thread]] worked for me.
 
 ** General django website work flow: (rough sketch):
+:PROPERTIES:
+:ID:       98da1dc0-2435-4534-a318-48d1d4413eaa
+:END:
 1. use ~manage.py startapp~
 2. put app name in settings.py
 3. point the maindir's urls.py to your app's urls.py
@@ -374,3 +432,25 @@ Getting a "Template does not exist" exception/error? [[https://stackoverflow.com
         </body>
       </html>
       #+end_src
+* The Webdev Experience :devlog:
+:PROPERTIES:
+:ID:       b487fcad-3e76-4c7b-b5c0-a1abb8a8ca05
+:END:
+- NodeJS is a javascript runtime- like a python interpreter, but for JS
+  - It lets you run ES6 javascript (the newest version of javascript), which allows you to use statements like =export= to make functions/variables/classes etc available to =import= from other javascript files.
+
+    In essence, it is a way to complete javascript as a module system, like python
+
+  - Most browsers do not support this type of ES6 javascript by default- you need to run a nodejs sever for that to work
+
+    This is opposed to django, which is also a server. However, it is not the same as nodejs, and so you need special considerations to use ES6 with it.
+
+- Bundlers are tools which, in various ways, allow one to use the new javascript syntax with older browsers
+
+  Here is a list of examples of bundlers I have seen mentioned:
+
+  + [[https://rollupjs.org/tutorial/#creating-your-first-bundle][Rollup]]
+
+  + Vite
+
+  + Webpack

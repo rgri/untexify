@@ -194,7 +194,7 @@ A different image came to me a few weeks ago. The unknown thing to be known appe
 :END:
 #+EXPORT_FILE_NAME: /home/shortcut/git/untexify/frontend/untexifyweb/testapp/templates/testapp/home.html
 This is the test of an html export with html code-blocks inbuilt.
-#+begin_src javascript :exports none 
+#+begin_src javascript :exports none
 // matches elements of the document "document" (presumably the default instance of the Document() object instantiated by call "defer" in the script element) which have "class=myCanvas".[fn:5]
 const canvas = document.querySelector('.myCanvas');
 const width = canvas.width = window.innerWidth;
@@ -205,7 +205,7 @@ ctx.fillStyle = 'rgb(0,0,0)';
 ctx.fillRect(0, 0, width, height);
 
 const colorPicker = document.querySelector('input[type="color"]');
-const sizePicker = 4; 
+const sizePicker = 4;
 const output = document.querySelector('.output');
 const clearBtn = document.querySelector('button');
 
@@ -451,6 +451,75 @@ Getting a "Template does not exist" exception/error? [[https://stackoverflow.com
 
   + [[https://rollupjs.org/tutorial/#creating-your-first-bundle][Rollup]]
 
+    I've started using this. Basically, I am going to want to do a few things:
+
+    1. Edit =packages.json= (the file npm locks its packages into) to include a "build" script which will do everything
+
+    2. Create a =rollup.config.js= to specify which files to bundle, and what format to do it in
+       First, import this plugin which lets us parse all of its dependencies from just packages.json
+       #+begin_src javascript :session readme :results output :tangle ./frontend/untexifyweb/testapp/rollup.config.js
+        import json from '@rollup/plugin-json';
+        #+end_src
+
+        =export default= is just ES6 Javascript for "this is the thing I am exporting".
+        #+begin_src javascript :session readme :results output :tangle ./frontend/untexifyweb/testapp/rollup.config.js
+        export default {
+            input: './frontend/untexifyweb/staticfiles/testapp/pixijs.js',
+            output: {
+                file: 'bundle.js',
+                format: 'cjs'
+            },
+            plugins: [json()]
+        };
+            #+end_src
+
   + Vite
 
   + Webpack
+** I am in hell
+:PROPERTIES:
+:ID:       a4d35653-d0a8-4dfb-9756-bae02f940c4f
+:END:
+Here's where I am now:
+#+begin_src mermaid :file graph.png  :session readme
+graph TD;
+    rollup.config.js -->Rollup;
+plugins & id[weird options] & id2[variables]-->package.json-->Rollup & Pixi.js;
+id2-->Rollup-->Pixi.js;
+id4[JS fiddling]-->Pixi.js & Rollup;
+Pixi.js-->HTMLCanvas & Javascript-->Django;
+#+end_src
+
+#+RESULTS:
+[[file:graph.png]]
+
+And here's where I was before:
+#+begin_src mermaid :file graph2.png  :session readme
+graph TD;
+id[JS fiddling]-->Javascript-->Django;
+id2[HTML fiddling] & id3[CSS fiddling] -->HTMLCanvas-->Django;
+#+end_src
+#+RESULTS:
+[[file:graph2.png]]
+
+
+It would be super ideal if I could collapse HTMl and CSS fiddling away, and then use some library just for working with the Canvas and Javascript directly. I.e., a true SPA.
+
+However, it's pretty clear at this point that Pixi.js is not the way forward:
+- It uses ES6 Javascript, which means most out-of-the-box browsers don't run it, and that necessitates NodeJS or something equivalent.
+
+- I can't use NodeJS because my project use Django as a webserver
+
+- This means I have to /bundle/ Pixi.js, which has turned out to be highly difficult because of its unconventional exporting style.
+
+  It doesn't simply export one "default" class or whatever, it has a bunch of different files. I'm not too sure, but it is complicated enough to have several "test" implementation projects on github, and the one working implementation I saw confirmed was complicated and depended on at least 4 or 5 different plugins.
+
+This is the goal:
+
+#+begin_src mermaid :file graph3.png  :session readme
+graph TD;
+id[JS fiddling] -->id2[ Magic JS SPA library]-->HTMLCanvas-->Django;
+#+end_src
+
+#+RESULTS:
+[[file:graph3.png]]

@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js'
+import { Application, Graphics } from 'pixi.js';
 const app = new PIXI.Application({
   background: '#1099bb',
   resizeTo: window,

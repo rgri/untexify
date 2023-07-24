@@ -77,6 +77,8 @@ class_names = [
 ]
 
 HttpResponseRedirect.allowed_schemes.append("data")
+
+
 # Create your views here.
 def index(request):
     return render(request, "testapp/index.html", {})
@@ -105,3 +107,7 @@ def get_drawing(request):
 def quadratic(request, x):
     output = 10
     return HttpResponse(output)
+
+
+def pixijs(request):
+    return render(request, "testapp/thing.html")

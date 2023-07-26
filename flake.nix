@@ -20,6 +20,7 @@
             pkgs.python39Packages.python
             pkgs.nodePackages.npm
             pkgs.nodePackages.rollup
+            pkgs.nodePackages.mermaid-cli
           ];
         };
       });

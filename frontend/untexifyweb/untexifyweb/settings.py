@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.redirects",
     "testapp",
     "django.contrib.sites",
+    "django_bootstrap5",
 ]
 SITE_ID = 1
 

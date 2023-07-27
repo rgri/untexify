@@ -18,6 +18,8 @@ albumentations="*"
 django = "^4.2.3"
 gunicorn = "^21.2.0"
 whitenoise = "^6.5.0"
+#FIXME: You don't need two installs of pyright.
+pyright = "^1.1.318"
 django-bootstrap5 = "^23.3"
 
 

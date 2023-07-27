@@ -15,11 +15,13 @@
       in {
         devShells.default = pkgs.mkShell {
           packages = [
-            poetry2nix.packages.${system}.poetry
+            pkgs.poetry
             pkgs.pyenv
             pkgs.python39Packages.python
             pkgs.nodePackages.npm
             pkgs.nodePackages.rollup
+            #FIXME: You don't need two installs of pyright.
+            pkgs.nodePackages.pyright
             pkgs.nodePackages.mermaid-cli
           ];
         };

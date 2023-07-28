@@ -109,5 +109,5 @@ def quadratic(request, x):
     return HttpResponse(output)
 
 
-def pixijs(request):
-    return render(request, "testapp/thing.html")
+def bootstrap(request):
+    return render(request, "testapp/bootstrap.html")

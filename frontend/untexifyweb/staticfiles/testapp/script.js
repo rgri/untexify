@@ -1,7 +1,7 @@
 var blank = true;
 let canvas = /**  @type{HTMLCanvasElement} */(document.getElementById("canvas"));
-const width = canvas.width = 200
-const height = canvas.height = 200
+const width = canvas.width = 72
+const height = canvas.height = 72
 const ctx = canvas.getContext('2d');
 const formInput = document.getElementById("id_drawingLink")
 

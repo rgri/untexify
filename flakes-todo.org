@@ -146,3 +146,19 @@ patching script interpreter paths in .
 [1,767 / 5,349] Compiling mlir/lib/Dialect/LLVMIR/IR/LLVMIntrinsicOps.cpp; 42s local ... (16>[1,831 / 5,349] Compiling tensorflow/compiler/xla/mlir_hlo/lib/Dialect/thlo/IR/thlo_ops.cc; >[1,879 / 5,349] Compiling tensorflow/compiler/xla/mlir_hlo/lib/Dialect/mhlo/transforms/legal>[1,976 / 5,349] Compiling mlir/lib/Dialect/Linalg/IR/LinalgOps.cpp; 39s local ... (16 action>[2,173 / 5,350] Compiling mlir/lib/Dialect/LLVMIR/IR/LLVMDialect.cpp; 76s local ... (16 acti>[2,334 / 5,350] Compiling mlir/lib/Dialect/Arith/IR/ArithOps.cpp; 29s local ... (16 actions,>[2,502 / 5,350] Compiling tensorflow/compiler/xla/mlir_hlo/lib/Dialect/lhlo/IR/lhlo_ops.cc; >[2,681 / 5,350] Compiling src/cpu/rnn/ref_rnn.cpp; 28s local ... (16 actions, 15 running)
 [2,961 / 5,686] Compiling stablehlo/dialect/ChloOps.cpp; 40s local ... (16 actions, 15 runni>[3,186 / 5,686] Compiling stablehlo/dialect/StablehloOps.cpp; 53s local ... (16 actions, 15 >[3,463 / 5,686] Compiling tensorflow/compiler/xla/mlir_hlo/lib/Dialect/mhlo/IR/hlo_ops.cc; 9>[3,728 / 5,686] Compiling tensorflow/compiler/xla/service/hlo_parser.cc; 44s local ... (16 a>[3,883 / 5,686] Compiling tensorflow/core/util/batch_util.cc; 59s local ... (16 actions, 15 >[4,092 / 5,686] Compiling tensorflow/compiler/mlir/tensorflow/ir/tf_ops_n_z.cc; 159s local .>/nix/store/sw36plhp82916wwg6i6097rkzza7d950-stdenv-linux/setup: line 1638:  6042 Killed     >
 :END:
+* Website TOOD
+:PROPERTIES:
+:ID:       70f6f63f-7d29-4bf3-b079-4a6bbc11c729
+:END:
+** [#A] Bigger, centered canvas
+:PROPERTIES:
+:ID:       9d92792c-05fd-4f39-bb0d-2910cd5dbcde
+:END:
+** [#A] Scale down submitted image nicely
+:PROPERTIES:
+:ID:       d17e9448-df4a-4b2a-b811-6a6c38c1bee4
+:END:
+** [#C] Navbar stuff
+:PROPERTIES:
+:ID:       ee026875-643c-4283-adb9-a57ed2fab5ba
+:END:

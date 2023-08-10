@@ -5,54 +5,70 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 <html class="no-js" lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Snart.com</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Snart.com</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
 
     <script src="{% static 'testapp/script.js' %}" defer></script>
-    </head>
-    <body>
-        <!--[if lt IE 8]>
+</head>
+
+<body>
+    <!--[if lt IE 8]>
             <p class="browserupgrade">
             You are using an <strong>outdated</strong> browser. Please
             <a href="http://browsehappy.com/">upgrade your browser</a> to improve
             your experience.
             </p>
         <![endif]-->
-        <nav class="navbar navbar-expand-md bg-primary bg-body-tertiary">
-            <div class="container-fluid">
-                <a href="#" class="navbar-brand">Untexify</a>
-            </div>
-        </nav>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="container mx-auto p-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-header mt-auto-0"> This is the title</h4>
-                            <p class="text-sm fs-6 pt-1 px-3">hhere is some asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffere is some asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuff</p>
-                            <button class="btn btn-outline-info me-2 clearButton" type="submit">OK</button>
-                            <canvas id="canvas" class="canvas" style="border: 3px solid black;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6">
-                <div class="container mx-auto p-5">
-                    <div class="card">
-                        <div class="card-body">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col"></div>
+    <nav class="navbar navbar-expand-md bg-primary bg-body-tertiary">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">Untexify</a>
         </div>
-    </body>
+    </nav>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="container mx-auto p-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-header mt-auto-0"> This is the title</h4>
+                        <p class="text-sm fs-6 pt-1 px-3">hhere is some
+                            asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some
+                            asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some
+                            asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some
+                            asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some
+                            asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffhere is some
+                            asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuffere is some
+                            asldkfja;lsdkf;alsdf;lakjsdf;ljas;lfjal;sj;fdlkja;lsfl;jl;ajzzstuff</p>
+                        <button class="btn btn-outline-info me-2 clearButton" type="submit">OK</button>
+                        <canvas id="canvas" class="canvas" style="border: 3px solid black;"></canvas>
+
+                        <form enctype="multipart/form-data" action="" method="post">
+                            {% csrf_token %}
+                            {{ form }}
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="container mx-auto p-5">
+                <div class="card">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</body>
+
 </html>

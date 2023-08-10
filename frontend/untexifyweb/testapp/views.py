@@ -98,8 +98,11 @@ def get_drawing_bootstrap(request):
                 image_array = tf.keras.utils.img_to_array(image)
                 img_array = tf.expand_dims(image_array, 0)
                 guess = class_names[np.argmax(tf.nn.softmax(model(img_array)))]
-            return HttpResponse(guess)
+            return render(
+                request, "testapp/bootstrap.html", {"form": form, "guess": guess}
+            )
     form = DrawingForm()
+    guess = ""
 
     return render(request, "testapp/bootstrap.html", {"form": form})
 

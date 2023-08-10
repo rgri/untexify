@@ -5,5 +5,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("<int:x>/", views.quadratic, name="quadratic"),
     path("home/", views.get_drawing, name="home"),
-    path("bootstrap/", views.bootstrap, name="bootstrap"),
+    path("bootstrap/", views.get_drawing_bootstrap, name="bootstrap"),
 ]

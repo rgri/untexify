@@ -88,6 +88,22 @@ def runOnTrainedModel(drawing):
     return "100"
 
 
+def get_drawing_bootstrap(request):
+    if request.method == "POST":
+        form = DrawingForm(request.POST)
+        if form.is_valid():
+            with urlopen(form.cleaned_data["drawingLink"]) as response:
+                image = Image.open(response)
+                image = image.convert("L")
+                image_array = tf.keras.utils.img_to_array(image)
+                img_array = tf.expand_dims(image_array, 0)
+                guess = class_names[np.argmax(tf.nn.softmax(model(img_array)))]
+            return HttpResponse(guess)
+    form = DrawingForm()
+
+    return render(request, "testapp/bootstrap.html", {"form": form})
+
+
 def get_drawing(request):
     if request.method == "POST":
         form = DrawingForm(request.POST)

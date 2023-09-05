@@ -79,4 +79,3 @@ with Pool(10) as p:
     p.map(
         helper, [(x, y) for x in original_images for y in range(20)]
     )  # generate the cartesian product [0 .. 52] X [0 .. 199]
-======= end

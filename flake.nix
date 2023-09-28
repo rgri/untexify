@@ -12,12 +12,18 @@
         # see https://github.com/nix-community/poetry2nix/tree/master#api for more functions and examples.
         inherit (poetry2nix.legacyPackages.${system}) mkPoetryApplication;
         pkgs = nixpkgs.legacyPackages.${system};
+        system = "x86_64-linux";
+        pythonPkgs = (import (builtins.fetchTarball {
+          sha256 = "1dvqwqki44v6s6adlmdy0lw3lm0z53ml6cd6i6wymni2ns1wpzy1";
+          url =
+            "https://github.com/NixOS/nixpkgs/archive/6e3a86f2f73a466656a401302d3ece26fba401d9.tar.gz";
+        })) { inherit system; };
       in {
         devShells.default = pkgs.mkShell {
           packages = [
+            pythonPkgs.python3Full
             pkgs.poetry
             pkgs.pyenv
-            pkgs.python39Packages.python
             pkgs.nodePackages.npm
             pkgs.nodePackages.rollup
             #FIXME: You don't need two installs of pyright.

@@ -15,6 +15,11 @@
    This is to make =run-python= look for the right executable
 
 3. Use =run-python= to open the interpreter
+
+4. If poetry complains about incorrect versions, make sure that you have the correct version of python installed as required by =pyproject.toml=.
+
+   As of [2023-09-28 Thu] this should be handled by the =pythonPkgs= import.
+
 * Insane ramblings
 :PROPERTIES:
 :ID:       c91ac22f-ede3-4ab0-88e2-ce723f8cde04

@@ -20,6 +20,7 @@
         })) { inherit system; };
       in {
         devShells.default = pkgs.mkShell {
+          LD_LIBRARY_PATH = "${pythonPkgs.stdenv.cc.cc.lib}/lib";
           packages = [
             pythonPkgs.python3Full
             pkgs.poetry

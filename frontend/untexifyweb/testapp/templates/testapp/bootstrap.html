@@ -44,7 +44,7 @@
                     <!-- BUG: There is weird whitespace padding on the bottom of the canvas -->
                     <h7 class="card-header mt-auto-0 text-center"> Draw symbols here!</h7>
                     <div class="card-body p-0">
-                        <canvas id="canvas" class="canvas" style="border: 3px solid black;"></canvas>
+                        <canvas id="canvas" class="canvas" ></canvas>
                     </div>
                     <div class="card-footer text-center mt-auto-0">
                         <form enctype="multipart/form-data" action="" method="post">
@@ -56,9 +56,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col">
             <div class="card h-50">
                 <div class="card-body">
+                    {% csrf_token %}
                     {{ guess }}
                 </div>
             </div>

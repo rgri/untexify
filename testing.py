@@ -5,25 +5,71 @@ import PIL
 import PIL.Image
 import tensorflow as tf
 import pathlib
-import albumentations as A
-import cv2
 import scipy
 
 from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 
-modelPath = "model.tflite"
+model = keras.models.load_model("/home/shortcut/git/untexify/frontend/untexifyweb/testapp/static/testapp/webmodel/")
+class_names = [
+    "cap",
+    "cup",
+    "geq",
+    "geqslant",
+    "gg",
+    "ggg",
+    "greaterthan",
+    "in",
+    "leq",
+    "leqslant",
+    "lessthan",
+    "ll",
+    "lll",
+    "mathbb{A}",
+    "mathbb{C}",
+    "mathbb{H}",
+    "mathbb{N}",
+    "mathbb{O}",
+    "mathbb{Q}",
+    "mathbb{R}",
+    "mathbb{S}",
+    "mathbb{Z}",
+    "ngeq",
+    "ngeqslant",
+    "ngtr",
+    "ni",
+    "nleq",
+    "nleqslant",
+    "nless",
+    "not ubset",
+    "not upset",
+    "notin",
+    "nprec",
+    "npreceq",
+    "nsubseteq",
+    "nsucc",
+    "nsucceq",
+    "nsupseteq",
+    "prec",
+    "preceq",
+    "setminus",
+    "sqsubset",
+    "sqsupset",
+    "subset",
+    "subset2",
+    "subseteq",
+    "subseteq2",
+    "succ",
+    "succeq",
+    "supset",
+    "supset2",
+    "supseteq",
+    "supseteq2",
+]
 
-interpreter = tf.lite.Interpreter(model_path=modelPath)
 
-classify_lite = interpreter.get_signature_runner("serving_default")
-
-image = tf.keras.utils.load_img("myinput.png")
+image = tf.keras.utils.load_img("myinput.png", color_mode="grayscale")
 image_array = tf.keras.utils.img_to_array(image)
 img_array = tf.expand_dims(image_array, 0)
-
-prediction = classify_lite(rescaling_1_input=img_array)
-array = np.array(prediction)
-guess = np.argmax(tf.nn.softmax(prediction["dense_3"]))
-print(guess)
+class_names[np.argmax(tf.nn.softmax(model(img_array)))]

@@ -1,6 +1,4 @@
 {
-  description = "Application packaged using poetry2nix";
-
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/";
   inputs.nixpkgsOld.url =

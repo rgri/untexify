@@ -28,7 +28,7 @@
             pkgs.poetry
             pkgs.pyenv
             #FIXME: You don't need two installs of pyright.
-            pkgs.nodePackages.mermaid-cli
+            pkgsOld.nodePackages.pyright
           ];
         };
       });

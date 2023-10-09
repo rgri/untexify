@@ -21,7 +21,8 @@
           SECRET_KEY = "dummy";
           LD_LIBRARY_PATH = nixpkgs.lib.makeLibraryPath [
             pkgsOld.gcc-unwrapped.lib
-            pkgs.gcc-unwrapped.lib
+            pkgsOld.libglvnd
+            pkgsOld.glib
           ];
           packages = [
             pkgsOld.python3Full

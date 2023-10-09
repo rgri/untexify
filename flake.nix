@@ -23,6 +23,8 @@
             pkgsOld.gcc-unwrapped.lib
             pkgsOld.libglvnd
             pkgsOld.glib
+            # Only necessary for transform.py
+            pkgsOld.zlib
           ];
           packages = [
             pkgsOld.python3Full

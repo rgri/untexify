@@ -16,7 +16,7 @@ from keras.models import Sequential
 
 original_images = os.listdir("/home/shortcut/git/untexify-data/original_images")
 
-# DONE: Explain the reasoning for this choice of transforms.
+
 # The transforms compenents were chosen as follows:
 # Sharpen() will preliminarily de-noise the image.
 # ElasticTransform() "squiggles" the image to simulate handwriting.
@@ -44,6 +44,7 @@ transform = A.Compose(
 
 
 def helper(index):
+    # tuple-aware variable assignment
     i, j = index
     print(i)
     print()
@@ -77,4 +78,4 @@ for i in original_images:
 with Pool(10) as p:
     p.map(
         helper, [(x, y) for x in original_images for y in range(20)]
-    )  # generate the cartesian product [0 .. 52] X [0 .. 199]
+    )  # generate the cartesian product of [ original_images ] x [ 1..20 ]

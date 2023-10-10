@@ -2,7 +2,7 @@
 :PROPERTIES:
 :ID:       822b312b-dedb-437f-880b-fdec9bf9f449
 :END:
-1. If envrc is fucked (i.e. "No poetry executable found" when doing =M-x poetry s=), you have to reload direnv in this project.
+1. If envrc is broken (i.e. "No poetry executable found" when doing =M-x poetry s=), you have to reload direnv in this project.
 
    You can accomplish this through some black-magic combination of:
 
@@ -16,10 +16,11 @@
 
 3. Use =run-python= to open the interpreter
 
+   + Use =C-u run-python= to manually point to the right python interpreter if weird import errors occur
+
 4. If poetry complains about incorrect versions, make sure that you have the correct version of python installed as required by =pyproject.toml=.
 
    As of [2023-09-28 Thu] this should be handled by the =pythonPkgs= import.
-
 * Insane ramblings
 :PROPERTIES:
 :ID:       c91ac22f-ede3-4ab0-88e2-ce723f8cde04
@@ -155,15 +156,38 @@ patching script interpreter paths in .
 :PROPERTIES:
 :ID:       70f6f63f-7d29-4bf3-b079-4a6bbc11c729
 :END:
-** [#A] Bigger, centered canvas
+** DONE [#A] Bigger, centered canvas
+CLOSED: [2023-10-10 Tue 04:45]
 :PROPERTIES:
 :ID:       9d92792c-05fd-4f39-bb0d-2910cd5dbcde
 :END:
-** [#A] Scale down submitted image nicely
+:LOGBOOK:
+- State "DONE"       from              [2023-10-10 Tue 04:45]
+:END:
+
+** DONE [#A] Scale down submitted image nicely :ATTACH:
+CLOSED: [2023-10-10 Tue 04:45]
 :PROPERTIES:
 :ID:       d17e9448-df4a-4b2a-b811-6a6c38c1bee4
+:ORG_ATTACH_FILES: performance.png
 :END:
+:LOGBOOK:
+- Note taken on [2023-10-10 Tue 04:45] \\
+  Actually just retraining the model for a bigger size- with great results!
+ [[file:~/scratch-nondropbox/org/.attach/d1/7e9448-df4a-4b2a-b811-6a6c38c1bee4/performance.png]]
+- State "DONE"       from              [2023-10-10 Tue 04:45]
+:END:
+
+
 ** [#C] Navbar stuff
 :PROPERTIES:
 :ID:       ee026875-643c-4283-adb9-a57ed2fab5ba
+:END:
+** TODO Clean up the wording of this document
+:PROPERTIES:
+:ID:       abd5e7ec-600a-412f-835b-90119fa22123
+:END:
+:LOGBOOK:
+- Refiled on [2023-10-10 Tue 04:45]
+- State "TODO"       from              [2023-10-10 Tue 04:44]
 :END:

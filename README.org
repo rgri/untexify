@@ -27,7 +27,7 @@ This entire project was planned and conceived in the lovely [[https://orgmode.or
       1) Pull a large list of symbols from the [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols][OEIS]]
          I simply copied a table's symbols and formatted them into a file such that each piece of $\LaTeX$ was on its own line.
       2) Convert the images into .png files
-         I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finnicky, so for future reference, I placed the file containing my equations called ~equations.txt~ the root of the git repository, then ran from the root:
+         I used [[https://github.com/mtyrolski/latex2image.git][latex2image]] to convert the list of commands into small, square images of each symbol. The program is a bit finicky, so for future reference, I placed the file containing my equations called ~equations.txt~ the root of the git repository, then ran from the root:
          #+begin_src bash
              cd src/
              . set.sh $absolute_path_to_equations_txt

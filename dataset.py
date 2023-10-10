@@ -14,8 +14,8 @@ from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 
-original_images = os.listdir("/home/shortcut/git/untexify-data/original_images")
-
+datadir = "/home/shortcut/git/untexify-data/"
+original_images = os.listdir(datadir + "original_images")
 
 # The transforms compenents were chosen as follows:
 # Sharpen() will preliminarily de-noise the image.
@@ -47,7 +47,7 @@ def helper(index):
     i, j = index
     print(i)
     print()
-    imagePath = "/home/shortcut/git/untexify-data/original_images/" + i
+    imagePath = datadir + "original_images/" + i
     image = cv2.imread(imagePath)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     if j % 50 == 0:
@@ -59,9 +59,7 @@ def helper(index):
     # DONE: Clean up this comment.
     transformed = transform(image=image)["image"]
     transformed = np.array(transformed)
-    outName = (
-        "/home/shortcut/git/untexify-data/images/" + i[:-4] + "/" + str(j) + ".png"
-    )
+    outName = datadir + "images/" + i[:-4] + "/" + str(j) + ".png"
 
     cv2.imwrite(outName, transformed)
 
@@ -69,7 +67,7 @@ def helper(index):
 # Generate the class directories
 for i in original_images:
     try:
-        os.mkdir("/home/shortcut/git/untexify-data/images/" + i[:-4])
+        os.mkdir(datadir + "images/" + i[:-4])
     except:
         pass
 

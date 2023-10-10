@@ -14,10 +14,11 @@ from keras import layers
 from keras.models import Sequential
 
 data_dir = pathlib.Path("/home/shortcut/git/untexify-data/images")
+saved_model_path = "new_size_model/model3"
 
 batch_size = 100
-img_height = 72
-img_width = 72
+img_height = 256
+img_width = 256
 train_ds = tf.keras.utils.image_dataset_from_directory(
     data_dir,
     validation_split=0.2,
@@ -37,7 +38,7 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
     batch_size=batch_size,
 )
 
-num_classes = 53
+num_classes = 188
 
 model = tf.keras.Sequential(
     [
@@ -51,7 +52,7 @@ model = tf.keras.Sequential(
         tf.keras.layers.Conv2D(64, 3, padding="same", activation="relu"),
         tf.keras.layers.MaxPooling2D(),
         tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(53),
+        tf.keras.layers.Dense(num_classes),
     ]
 )
 
@@ -88,14 +89,10 @@ plt.plot(epochs_range, val_loss, label="Validation Loss")
 plt.legend(loc="upper right")
 plt.title("Training and Validation Loss")
 plt.show()
-
+model.save(filepath="new_size_model/model3")
 # Run the model on a hand-drawn example
 
 
-image = tf.keras.utils.load_img("myinput.png", color_mode="grayscale")
-image_array = tf.keras.utils.img_to_array(image)
-img_array = tf.expand_dims(image_array, 0)
-train_ds.class_names[np.argmax(tf.nn.softmax(model(img_array)))]
 # # For terminal usage; runs the model on the first 200 images in a pre-defined class.
 #
 # for i in range(200):

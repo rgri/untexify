@@ -24,10 +24,9 @@ original_images = os.listdir("/home/shortcut/git/untexify-data/original_images")
 # Equalize() will remove color differences to match the input method on the frontend
 transform = A.Compose(
     [
-        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
-        A.ElasticTransform(alpha=20, sigma=10000, alpha_affine=10, p=1),
-        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
-        A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
+        A.Downscale(scale_min=0.07, scale_max=0.07, p=1),
+        A.ElasticTransform(alpha=20, sigma=20000, alpha_affine=10, p=1),
+        A.Downscale(scale_min=0.07, scale_max=0.07, p=1),
         A.Equalize(p=1.0),
     ]
 )
@@ -75,7 +74,7 @@ for i in original_images:
         pass
 
 # Generate the dataset
-with Pool(10) as p:
+with Pool(15) as p:
     p.map(
         helper, [(x, y) for x in original_images for y in range(20)]
     )  # generate the cartesian product of [ original_images ] x [ 1..20 ]

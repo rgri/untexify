@@ -5,7 +5,6 @@ import PIL
 import PIL.Image
 import tensorflow as tf
 import pathlib
-import scipy
 
 from tensorflow import keras
 from keras import layers

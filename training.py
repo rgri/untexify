@@ -7,7 +7,6 @@ import tensorflow as tf
 import pathlib
 import albumentations as A
 import cv2
-import scipy
 
 from tensorflow import keras
 from keras import layers

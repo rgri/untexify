@@ -6,68 +6,70 @@
 {% bootstrap_javascript %}
 <html class="no-js" lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Snart.com</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Snart.com</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <!-- Place favicon.ico in the root directory -->
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
 
-    <script src="{% static 'testapp/script.js' %}" defer></script>
-</head>
+        <script src="{% static 'testapp/script.js' %}" defer></script>
+    </head>
 
-<body>
-    <!--[if lt IE 8]>
+    <body>
+        <!--[if lt IE 8]>
             <p class="browserupgrade">
             You are using an <strong>outdated</strong> browser. Please
             <a href="http://browsehappy.com/">upgrade your browser</a> to improve
             your experience.
             </p>
         <![endif]-->
-    <nav class="navbar navbar-expand-md bg-primary bg-body-tertiary">
+        <nav class="navbar navbar-expand-md bg-primary bg-body-tertiary">
+            <div class="container-fluid">
+                <a href="#" class="navbar-brand">Untexify</a>
+            </div>
+        </nav>
         <div class="container-fluid">
-            <a href="#" class="navbar-brand">Untexify</a>
+
         </div>
-    </nav>
-    <div class="container-fluid">
+        <div class="row">
 
-    </div>
-    <div class="row">
-
-        <div class="col"> </div>
-        <div class="col">
-            <div class="container d-flex mx-auto p-5">
-                <div class="card d-flex">
-                    <!-- BUG: There is weird whitespace padding on the bottom of the canvas -->
-                    <h7 class="card-header mt-auto-0 text-center"> Draw symbols here!</h7>
-                    <div class="card-body p-0">
-                        <canvas id="canvas" class="canvas" ></canvas>
+            <div class="col"> </div>
+            <div class="col">
+                <div class="container d-flex mx-auto p-5">
+                    <div class="card d-flex">
+                        <!-- BUG: There is weird whitespace padding on the bottom of the canvas -->
+                        <h7 class="card-header mt-auto-0 text-center"> Draw symbols here!</h7>
+                        <div class="card-body p-0">
+                            <canvas id="canvas" class="canvas" ></canvas>
+                        </div>
+                        <div class="card-footer text-center mt-auto-0">
+                            <form enctype="multipart/form-data" action="" method="post">
+                                {% csrf_token %}
+                                {{ form }}
+                                <input type="submit" class="btn btn-info me-2 clearButton" value="Submit">
+                            </form>
+                        </div>
                     </div>
-                    <div class="card-footer text-center mt-auto-0">
-                        <form enctype="multipart/form-data" action="" method="post">
+                </div>
+            </div>
+            <div class="col">
+                <div class="container d-flex mx-auto p-5">
+                    <div class="card h-50">
+                        <div class="card-body">
                             {% csrf_token %}
-                            {{ form }}
-                            <input type="submit" class="btn btn-info me-2 clearButton" value="Submit">
-                        </form>
+                            {{ guess }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card h-50">
-                <div class="card-body">
-                    {% csrf_token %}
-                    {{ guess }}
-                </div>
-            </div>
-        </div>
 
-        <div class="col"> </div>
-    </div>
-    </div>
-</body>
+            <div class="col"> </div>
+        </div>
+            </div>
+    </body>
 
 </html>

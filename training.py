@@ -13,7 +13,7 @@ from keras import layers
 from keras.models import Sequential
 
 data_dir = pathlib.Path("/home/shortcut/git/untexify-data/images")
-saved_model_path = "new_size_model/model3"
+saved_model_path = "new_size_model/model4"
 
 batch_size = 100
 img_height = 256

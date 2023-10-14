@@ -11,14 +11,22 @@ import numpy as np
 # Sigma is "squiggliness", and Alpha is movement? alpha_affine is how much it moves across the page.
 # p is the probability a transform will be applied
 # TODO: Copy these comments to dataset.py
-transform = A.Compose(
+rotateTransform = A.Compose(
+    [
+        A.CropAndPad(
+            p=1,
+            px=60,
+            pad_cval=1000,
+            pad_mode=cv2.BORDER_CONSTANT,
+        ),
+    ]
+)
+# See [[id:c77b0738-55b0-4e40-acfd-d941e8794e5d]]
+wiggleTransform = A.Compose(
     [
         A.Downscale(scale_min=0.07, scale_max=0.07, p=1),
-        # A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
         A.ElasticTransform(alpha=20, sigma=20000, alpha_affine=10, p=1),
         A.Downscale(scale_min=0.07, scale_max=0.07, p=1),
-        # A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
-        # A.Sharpen(alpha=(1, 1), lightness=(1.0, 1.0), p=1.0),
         A.Equalize(p=1.0),
     ]
 )
@@ -26,6 +34,9 @@ transform = A.Compose(
 # Get the first command line argument- sys.argv[0] is always the command itself
 image = cv2.imread("inputimage.png")
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+rotated = rotateTransform(image=image)["image"]
+
 
 transformed = transform(image=image)["image"]
 transformed = np.array(transformed)

@@ -68,12 +68,12 @@ def helper(index):
     threshold = 1
 
     h, b = bw_rotated.shape[:2]
-    for i in range(h):
-        for j in range(b):
-            if bw_rotated[i][j] > threshold:
-                threshold_rotated[i][j] = 255
+    for x in range(h):
+        for y in range(b):
+            if bw_rotated[x][y] > threshold:
+                threshold_rotated[x][y] = 255
             else:
-                threshold_rotated[i][j] = 0
+                threshold_rotated[x][y] = 0
 
     wiggle_transformed = wiggleTransform(image=threshold_rotated)["image"]
 

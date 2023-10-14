@@ -21,6 +21,8 @@
 4. If poetry complains about incorrect versions, make sure that you have the correct version of python installed as required by =pyproject.toml=.
 
    As of [2023-09-28 Thu] this should be handled by the =pythonPkgs= import.
+
+5. The newer model used by this project (as of [2023-10-13 Fri]) is too large to push to git. It is in [[id:0ef0366f-6e8b-4610-9a11-78a816c73a21]].
 * Insane ramblings
 :PROPERTIES:
 :ID:       c91ac22f-ede3-4ab0-88e2-ce723f8cde04

@@ -36,10 +36,24 @@ image = cv2.imread("inputimage.png")
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 rotated = rotateTransform(image=image)["image"]
+bw_rotated = cv2.cvtColor(rotated, cv2.COLOR_RGB2GRAY)
+threshold_rotated = bw_rotated[:]
+threshold = 1
 
+h, b = bw_rotated.shape[:2]
+for i in range(h):
+    for j in range(b):
+        if bw_rotated[i][j] > threshold:
+            threshold_rotated[i][j] = 255
+        else:
+            threshold_rotated[i][j] = 0
 
-transformed = transform(image=image)["image"]
-transformed = np.array(transformed)
+wiggle_transformed = wiggleTransform(image=threshold_rotated)["image"]
 outName = "./outputimage.png"
+cv2.imwrite(outName, wiggle_transformed)
 
-cv2.imwrite(outName, transformed)
+# transformed = transform(image=image)["image"]
+
+# transformed = np.array(transformed)
+# outName = "./outputimage.png"
+# cv2.imwrite(outName, transformed)

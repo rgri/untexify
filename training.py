@@ -88,7 +88,7 @@ plt.plot(epochs_range, val_loss, label="Validation Loss")
 plt.legend(loc="upper right")
 plt.title("Training and Validation Loss")
 plt.show()
-model.save(filepath="new_size_model/model3")
+model.save(filepath=saved_model_path)
 # Run the model on a hand-drawn example
 
 

@@ -92,5 +92,5 @@ for i in original_images:
 # Generate the dataset
 with Pool(15) as p:
     p.map(
-        helper, [(x, y) for x in original_images for y in range(20)]
+        helper, [(x, y) for x in original_images for y in range(100)]
     )  # generate the cartesian product of [ original_images ] x [ 1..20 ]

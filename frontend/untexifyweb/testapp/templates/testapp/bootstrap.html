@@ -43,7 +43,7 @@
                 <div class="container d-flex mx-auto p-5">
                     <div class="card d-flex  bg-success" >
                         <!-- BUG: There is weird whitespace padding on the bottom of the canvas -->
-                        <h7 class="card-header mt-auto-0 text-center"> Draw symbols here!</h7>
+                        <h7 class="card-header mt-auto-0 text-bg-success text-center"> Draw symbols here!</h7>
                         <div class="card-body p-0">
                             <canvas id="canvas" class="canvas" ></canvas>
                         </div>
@@ -51,7 +51,7 @@
                             <form enctype="multipart/form-data" action="" method="post">
                                 {% csrf_token %}
                                 {{ form }}
-                                <input type="submit" class="btn btn-outline-light me-2 clearButton" value="Submit">
+                                <input type="submit" class="btn btn-outline-light me-2 clearButton text-bg-success" value="Submit">
                             </form>
                         </div>
                     </div>

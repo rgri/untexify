@@ -16,6 +16,8 @@ from keras.models import Sequential
 datadir = "/home/shortcut/git/untexify-data/"
 original_images = os.listdir(datadir + "original_images")
 
+# REVIEW: two passes of this- one which sets px=INT to simulate shrinking, the second to simulate shifting
+# see [[id:48db14f6-5093-4fd9-b322-13736394a68a]]
 rotateTransform = A.Compose(
     [
         A.CropAndPad(

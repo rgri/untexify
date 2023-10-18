@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 {% load static %}
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-bs-theme="dark">
 
     <head>
         <meta charset="utf-8">
@@ -28,9 +28,9 @@
             your experience.
             </p>
         <![endif]-->
-        <nav  class="navbar navbar-expand-md bg-primary bg-body-tertiary" data-bs-theme="dark" >
+        <nav  class="navbar  bg-success ">
             <div class="container-fluid" >
-                <a href="#" class="navbar-brand" >Untexify</a>
+                <a href="#" class="navbar-brand p-2" >Untexify</a>
             </div>
         </nav>
         <div class="container-fluid">
@@ -41,7 +41,7 @@
             <div class="col"> </div>
             <div class="col">
                 <div class="container d-flex mx-auto p-5">
-                    <div class="card d-flex">
+                    <div class="card d-flex  bg-success" >
                         <!-- BUG: There is weird whitespace padding on the bottom of the canvas -->
                         <h7 class="card-header mt-auto-0 text-center"> Draw symbols here!</h7>
                         <div class="card-body p-0">
@@ -51,7 +51,7 @@
                             <form enctype="multipart/form-data" action="" method="post">
                                 {% csrf_token %}
                                 {{ form }}
-                                <input type="submit" class="btn btn-info me-2 clearButton" value="Submit">
+                                <input type="submit" class="btn btn-outline-light me-2 clearButton" value="Submit">
                             </form>
                         </div>
                     </div>
@@ -59,11 +59,19 @@
             </div>
             <div class="col">
                 <div class="container d-flex mx-auto p-5">
-                    <div class="card h-50">
-                        <h7 class="card-header mt-auto-0 text-center"> Best guess</h7>
-                        <div class="card-body">
+                    <div class="card h-50 bg-success" data-bs-theme="light">
+                        <h7 class="card-header mt-auto-0 text-center text-bg-success" >Best guess</h7>
+                        <div class="card-body bg-light text-center" >
                             {% csrf_token %}
-                            {{ guess }}
+                            \({{ guess }}\), {{ guess }}
+                        </div>
+                        <div class="collapse list-group-flush" id="moreGuesses">
+                            {% for guessItem in guessList %}
+                            <div class="card-body bg-light">\({{ guessItem }}\), {{ guessItem }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="card-footer text-center mt-auto-0">
+                            <a class="btn btn-outline-light" href="#moreGuesses" data-bs-toggle="collapse" aria-expanded="false" aria-controls="moreGuesses">More</a>
                         </div>
                     </div>
                 </div>

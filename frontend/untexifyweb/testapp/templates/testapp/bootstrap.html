@@ -61,6 +61,7 @@
                 <div class="container d-flex mx-auto p-5">
                     <div class="card h-50 bg-success" data-bs-theme="light">
                         <h7 class="card-header mt-auto-0 text-center text-bg-success" >Best guess</h7>
+                        {% if guessList %}
                         <div class="card-body bg-light text-center" >
                             {% csrf_token %}
                             \({{ guess }}\), {{ guess }}
@@ -73,6 +74,15 @@
                         <div class="card-footer text-center mt-auto-0">
                             <a class="btn btn-outline-light" href="#moreGuesses" data-bs-toggle="collapse" aria-expanded="false" aria-controls="moreGuesses">More</a>
                         </div>
+                        {% else %}
+                        <div class="card-body bg-light text-center" >
+                            {% csrf_token %}
+                            {{ guess }}
+                        </div>
+                        <div class="card-footer text-center mt-auto-0">
+                            <a class="btn btn-outline-light disabled" href="#moreGuesses" data-bs-toggle="collapse" aria-expanded="false" disabled aria-controls="moreGuesses">More</a>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

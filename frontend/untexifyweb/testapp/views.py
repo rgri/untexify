@@ -232,9 +232,21 @@ def get_drawing_bootstrap(request):
                 image = image.convert("L")
                 image_array = tf.keras.utils.img_to_array(image)
                 img_array = tf.expand_dims(image_array, 0)
-                updatedGuess = class_names[np.argmax(tf.nn.softmax(model(img_array)))]
+                # REVIEW: Should the $$ stripping be hardcoded into the class names?
+                # Retrieve the raw tex by stripping block equation markers
+                updatedGuess = class_names[
+                    np.argmax(tf.nn.softmax(model(img_array)))
+                ].strip("$$")
+                # Sort the guesses, pull the top 2-5, sort them by most confident, collect their corresponding classes
+                guessList = [
+                    class_names[x].strip("$$")
+                    for x in np.argsort(tf.nn.softmax(model(img_array)))[0][-5:-1][::-1]
+                ]
+
             return render(
-                request, "testapp/bootstrap.html", {"form": form, "guess": updatedGuess}
+                request,
+                "testapp/bootstrap.html",
+                {"form": form, "guess": updatedGuess, "guessList": guessList},
             )
     form = DrawingForm()
     guess = "No guess yet..."

@@ -32,6 +32,7 @@
             pkgs.pyenv
             #FIXME: You don't need two installs of pyright.
             pkgsOld.nodePackages.pyright
+            pkgs.flyctl
           ];
         };
       });

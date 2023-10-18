@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Snart.com</title>
+        <title>Untexify</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -17,6 +17,8 @@
         <!-- Place favicon.ico in the root directory -->
 
         <script src="{% static 'testapp/script.js' %}" defer></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </head>
 
     <body>
@@ -27,9 +29,9 @@
             your experience.
             </p>
         <![endif]-->
-        <nav class="navbar navbar-expand-md bg-primary bg-body-tertiary">
-            <div class="container-fluid">
-                <a href="#" class="navbar-brand">Untexify</a>
+        <nav  class="navbar navbar-expand-md bg-primary bg-body-tertiary" data-bs-theme="dark" >
+            <div class="container-fluid" >
+                <a href="#" class="navbar-brand" >Untexify</a>
             </div>
         </nav>
         <div class="container-fluid">
@@ -59,6 +61,7 @@
             <div class="col">
                 <div class="container d-flex mx-auto p-5">
                     <div class="card h-50">
+                        <h7 class="card-header mt-auto-0 text-center"> Best guess</h7>
                         <div class="card-body">
                             {% csrf_token %}
                             {{ guess }}

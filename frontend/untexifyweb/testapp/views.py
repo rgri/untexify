@@ -237,7 +237,7 @@ def get_drawing_bootstrap(request):
                 request, "testapp/bootstrap.html", {"form": form, "guess": updatedGuess}
             )
     form = DrawingForm()
-    guess = "045"
+    guess = "No guess yet..."
 
     return render(request, "testapp/bootstrap.html", {"form": form, "guess": guess})
 

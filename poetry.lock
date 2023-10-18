@@ -295,20 +295,6 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
-name = "django-bootstrap5"
-version = "23.3"
-description = "Bootstrap 5 for Django"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "django_bootstrap5-23.3-py3-none-any.whl", hash = "sha256:ca1bb2f40175ed1c1725f52f249a574bf629b33b5a0af3bec0eab1de6d72836c"},
-    {file = "django_bootstrap5-23.3.tar.gz", hash = "sha256:21e1956a8a819370decc5d365ce4f4207761cb065afec5a7df8c4c8c49507f2e"},
-]
-
-[package.dependencies]
-django = ">=3.2"
-
-[[package]]
 name = "flatbuffers"
 version = "23.5.26"
 description = "The FlatBuffers serialization format for Python"
@@ -2024,4 +2010,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "3.9.12"
-content-hash = "a04acf06a1773031a6c386ee577fc27bd2c35722019b7c4de22eca94b2cf73b1"
+content-hash = "a9ed1c85e78b28fbbc5901c046782bb93608ecff317fdad30cbd185bfd213ab4"

@@ -51,7 +51,8 @@
                             <form enctype="multipart/form-data" action="" method="post">
                                 {% csrf_token %}
                                 {{ form }}
-                                <input type="submit" class="btn btn-outline-light me-2 clearButton text-bg-success" value="Submit">
+                                <input type="submit" class="btn btn-outline-light me-2 text-bg-success" value="Submit">
+                                <input type="button" class="btn btn-outline-light me-2 clearButton text-bg-success" value="↻">
                             </form>
                         </div>
                     </div>
@@ -80,6 +81,7 @@
                             {{ guess }}
                         </div>
                         <div class="card-footer text-center mt-auto-0">
+                            <a class="btn btn-outline-light disabled" href="#moreGuesses" data-bs-toggle="collapse" aria-expanded="false" disabled aria-controls="moreGuesses">More</a>
                             <a class="btn btn-outline-light disabled" href="#moreGuesses" data-bs-toggle="collapse" aria-expanded="false" disabled aria-controls="moreGuesses">More</a>
                         </div>
                         {% endif %}

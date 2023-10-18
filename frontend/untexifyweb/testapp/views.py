@@ -214,15 +214,6 @@ class_names = [
 HttpResponseRedirect.allowed_schemes.append("data")
 
 
-# Create your views here.
-def index(request):
-    return render(request, "testapp/index.html", {})
-
-
-def runOnTrainedModel(drawing):
-    return "100"
-
-
 def get_drawing_bootstrap(request):
     if request.method == "POST":
         form = DrawingForm(request.POST)
@@ -252,27 +243,6 @@ def get_drawing_bootstrap(request):
     guess = "No guess yet..."
 
     return render(request, "testapp/bootstrap.html", {"form": form, "guess": guess})
-
-
-def get_drawing(request):
-    if request.method == "POST":
-        form = DrawingForm(request.POST)
-        if form.is_valid():
-            with urlopen(form.cleaned_data["drawingLink"]) as response:
-                image = Image.open(response)
-                image = image.convert("L")
-                image_array = tf.keras.utils.img_to_array(image)
-                img_array = tf.expand_dims(image_array, 0)
-                guess = class_names[np.argmax(tf.nn.softmax(model(img_array)))]
-            return HttpResponse(guess)
-    form = DrawingForm()
-
-    return render(request, "testapp/home.html", {"form": form})
-
-
-def quadratic(request, x):
-    output = 10
-    return HttpResponse(output)
 
 
 def bootstrap(request):

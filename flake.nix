@@ -20,11 +20,12 @@
         devShells.default = pkgs.mkShell {
           SECRET_KEY = "dummy";
           LD_LIBRARY_PATH = nixpkgs.lib.makeLibraryPath [
-            pkgsOld.gcc-unwrapped.lib
-            pkgsOld.libglvnd
-            pkgsOld.glib
-            # Only necessary for transform.py
-            pkgsOld.zlib
+            # pkgsOld.gcc-unwrapped.lib
+            # pkgsOld.libglvnd
+            # pkgsOld.glib
+            # # Only necessary for transform.py
+            # pkgsOld.zlib
+            pkgsOld.stdenv.cc.cc
           ];
           packages = [
             pkgsOld.python3Full

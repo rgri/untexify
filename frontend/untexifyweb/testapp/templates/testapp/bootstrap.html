@@ -26,6 +26,11 @@
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="msapplication-config" content="{% static 'testapp' %}/browserconfig.xml">
         <meta name="theme-color" content="#ffffff">
+        <style>
+         .logo {
+             filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+         }
+        </style>
     </head>
 
     <body>
@@ -40,14 +45,14 @@
         <nav  class="navbar  navbar-expand-lg bg-success ">
             <div class="container-fluid" >
                 <a href="#" class="navbar-brand p-2" >
-                    <img src="{% static 'testapp/logo.svg' %}" alt="Logo" width="30" />
+                    <img src="{% static 'testapp/logo.svg' %}" class="logo" width="30" />
                     Untexify</a>
-                <div class="navbar-collapse " >
-                    <div class="navbar-nav">
-                        <a class="nav-link " href="https://github.com/rgri/untexify">GitHub</a>
+                    <div class="navbar-collapse " >
+                        <div class="navbar-nav">
+                            <a class="nav-link " href="https://github.com/rgri/untexify">GitHub</a>
+                        </div>
                     </div>
-                </div>
-                <span class="navbar-text pull-left ">a bad clone of <a href="https://detexify.kirelabs.org/classify.html">Detexify</a></span>
+                    <span class="navbar-text pull-left ">a bad clone of <a href="https://detexify.kirelabs.org/classify.html">Detexify</a></span>
             </div>
         </nav>
         <div class="container-fluid">

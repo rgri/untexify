@@ -1,4 +1,4 @@
-#+title: Untexify - a bad clone of [[https://detexify.kirelabs.org/classify.html][Detexify]]
+#+title: Untexify - a clone of [[https://detexify.kirelabs.org/classify.html][Detexify]]
 #+STARTUP:     latexpreview
 #+STARTUP:     nologdone
 #+PROPERTY: header-args:html :session first :exports both :results output :tangle codeblocks.py :comments link :noweb-ref 0 :noweb yes
